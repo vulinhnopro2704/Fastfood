@@ -1,0 +1,63 @@
+/* Dark mode styles for the form */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #21C3FC;
+}
+
+.form-card {
+    background: linear-gradient(145deg, #081028, #0B1739);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 5px rgba(203, 60, 255, 0.4);
+    transition: box-shadow 0.3s ease-in-out;
+    width: 100%;
+    max-width: 500px;
+    margin: 20px;
+}
+
+.form-card:hover {
+    box-shadow: 0 4px 5px rgba(203, 60, 255, 0.7);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #21C3FC;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    display: block;
+    padding: 10px;
+    border: 1px solid #21C3FC;
+    border-radius: 5px;
+    background-color: #081028;
+    color: #CB3CFF;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #CB3CFF;
+    box-shadow: 0 0 5px rgba(203, 60, 255, 0.7);
+    outline: none;
+}
+
+button:active {
+    background: #DC2B2B;
+    color: #fff;
+}
