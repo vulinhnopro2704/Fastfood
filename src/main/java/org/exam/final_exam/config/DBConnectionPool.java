@@ -11,13 +11,13 @@ public class DBConnectionPool {
 
     private DBConnectionPool() {
         dataSource = new BasicDataSource();
-        dataSource.setUrl("jdbc:mysql://localhost:3306/final_exam?useSSL=false");
-        dataSource.setUsername("root");
-        dataSource.setPassword("");
+        dataSource.setUrl("jdbc:postgresql://ep-silent-cherry-a139vucf.ap-southeast-1.aws.neon.tech/neondb?user=neondb_owner&password=5EDdVRUZy7YG&sslmode=require");
+        dataSource.setUsername("neondb_owner");
+        dataSource.setPassword("5EDdVRUZy7YG");
         dataSource.setMinIdle(5);
         dataSource.setMaxIdle(10);
         dataSource.setMaxOpenPreparedStatements(100);
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setDriverClassName("org.postgresql.Driver");
     }
 
     public static synchronized DBConnectionPool getInstance() {
