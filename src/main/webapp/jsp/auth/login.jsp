@@ -18,8 +18,8 @@
     <h1 class="form-header">Login</h1>
     <form action="<c:url value='/auth/login'/>" method="post">
       <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username">
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email">
       </div>
       <div class="form-group">
         <div>

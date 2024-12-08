@@ -3,10 +3,7 @@ package org.exam.final_exam.dao;
 import org.exam.final_exam.config.DBConnectionPool;
 import org.exam.final_exam.config.ResultSetExtractor;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +13,7 @@ public class GenericDAO {
         try (Connection conn = DBConnectionPool.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             setParameters(stmt, params);
+
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     results.add(extractor.extractData(rs));
@@ -43,9 +41,11 @@ public class GenericDAO {
         try (Connection conn = DBConnectionPool.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             setParameters(stmt, params);
+
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     result = extractor.extractData(rs);
+
                 }
             }
         } catch (SQLException e) {
