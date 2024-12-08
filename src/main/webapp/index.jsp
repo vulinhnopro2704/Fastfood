@@ -59,7 +59,7 @@
                 <!-- List of cards -->
                 <div class="card-container">
                     <c:forEach var="i" begin="1" end="5">
-                        <c:url var="imageUrl" value="/assets/images/chicken.jpg" />
+                        <c:url var="imageUrl" value="/assets/images/chicken.jpeg" />
                         <jsp:include page="/jsp/components/card.jsp">
                             <jsp:param name="imageSrc" value="${imageUrl}" />
                             <jsp:param name="altText" value="Healthy Noodles" />
@@ -79,7 +79,7 @@
         <div class="cart-header">Giỏ hàng của bạn</div>
         <div class="cart-items">
             <c:forEach var="i" begin="1" end="3">
-                <c:url var="imageUrl" value="/assets/images/chicken.jpg" />
+                <c:url var="imageUrl" value="/assets/images/chicken.jpeg" />
                 <jsp:include page="/jsp/components/cart-item.jsp">
                     <jsp:param name="imageSrc" value="${imageUrl}" />
                     <jsp:param name="altText" value="Product" />

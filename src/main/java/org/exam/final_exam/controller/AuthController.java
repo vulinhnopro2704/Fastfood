@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet(name = "AuthController", urlPatterns = {"/auth", "/auth/login", "/auth/logout"})
+@WebServlet(name = "AuthController", urlPatterns = {"/auth", "/auth/login", "/auth/logout", "/auth/signup"})
 public class AuthController extends HttpServlet {
 
     private final UsersBO usersBO ;
@@ -33,7 +33,10 @@ public class AuthController extends HttpServlet {
                 out.println("</body></html>");
                 break;
             case "/auth/login":
-                response.sendRedirect(request.getContextPath() + "/jsp/auth/login.jsp");
+                request.getRequestDispatcher("/jsp/auth/login.jsp").forward(request, response);
+                break;
+            case "/auth/signup":
+                request.getRequestDispatcher("/jsp/auth/sign-up.jsp").forward(request, response);
                 break;
             case "/auth/logout":
 //                response.sendRedirect(request.getContextPath() + "/auth/login");
@@ -70,7 +73,7 @@ public class AuthController extends HttpServlet {
                    session.setAttribute("email", user.getEmail());
                    session.setAttribute("role", user.getRole());
                    session.setAttribute("id", Integer.toString(user.getId()));
-                   request.getRequestDispatcher("/jsp/trangchu.jsp").forward(request, response);
+                   request.getRequestDispatcher("index.jsp").forward(request, response);
                }
 
                 break;

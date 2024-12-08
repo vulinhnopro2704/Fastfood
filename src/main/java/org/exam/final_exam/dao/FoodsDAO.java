@@ -1,9 +1,8 @@
 package org.exam.final_exam.dao;
 
-import org.exam.final_exam.entity.Foods;
-
-
 import java.util.List;
+
+import org.exam.final_exam.entity.Foods;
 public class FoodsDAO {
     private GenericDAO genericDAO;
 
@@ -54,6 +53,4 @@ public class FoodsDAO {
         String sql = "SELECT * FROM foods WHERE id = ?";
         return genericDAO.isExist(sql, id);
     }
-
-
 }

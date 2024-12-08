@@ -33,8 +33,6 @@
 	padding: 10px 20px;
 	border: none;
 	border-radius: 5px;
-	background-color: #007bff;
-	color: white;
 	text-align: center;
 }
 
@@ -47,7 +45,7 @@ body {
 	padding-bottom: 40px;
 }
 
-.footer{
+.footer {
 	position: fixed;
 	left: 0;
 	bottom: 0;
@@ -55,7 +53,7 @@ body {
 	background-color: var(--color-primary);
 	color: white;
 	text-align: center;
-	box-shadow: -1px -1px 10px 0px rgba(0,0,0,0.75);
+	box-shadow: -1px -1px 10px 0px rgba(0, 0, 0, 0.75);
 }
 
 .footer p {
