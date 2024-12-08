@@ -1,234 +1,64 @@
+:root {
+	--color-primary: #1f1d2b;
+	--color-secondary: #252836;
+	--color-tertiary: #393c49;
+	--color-quaternary: #abbbc2;
+	--color-quinary: #e0e6e9;
+	--color-accent1: #ea7f69;
+	--color-accent2: #ea7c69;
+	--color-accent3: #50d1aa;
+	--color-accent4: rgba(136, 224, 145, 0.24);
+	--bg-color: #1f1d2b;
+	--bg-hover: #343444;
+	--text-color: #ffffff;
+	--text-muted: #ea7c69;
+	--primary-bg: #1f1d2b;
+	--secondary-bg: #252836;
+	--highlight-bg: #ea7c69;
+}
+
+/* Reset some default browser styles */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+/* Basic styles for buttons */
+.btn {
+	outline: none;
+	text-decoration: none;
+	display: block;
+	cursor: pointer;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	background-color: #007bff;
+	color: white;
+	text-align: center;
+}
+
+/* Basic styles for body */
 body {
-    background-color: #081028;
-    color: #21c3fc;
-    font-family: Arial, sans-serif;
-    padding: 30px 20px;
-    margin-bottom: 40px;
+	font-family: "Montserrat", sans-serif;
+	line-height: 1.5;
+	background-color: var(--color-primary);
+	color: #fff;
+	padding-bottom: 40px;
 }
 
-.content {
-    max-height: 80vh;
-    overflow-y: auto;
+.footer{
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	background-color: var(--color-primary);
+	color: white;
+	text-align: center;
+	box-shadow: -1px -1px 10px 0px rgba(0,0,0,0.75);
 }
 
-.search_bar {
-    background: linear-gradient(145deg, #081028, #0b1739);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 3px rgba(203, 60, 255, 0.4);
-    transition: box-shadow 0.3s ease-in-out;
-    width: 100%;
-    max-width: 800px;
-    margin: 20px auto;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.search_bar:hover {
-    box-shadow: 0 2px 3px rgba(203, 60, 255, 0.7);
-}
-
-.search_bar div {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.search_bar input[type="radio"] {
-    width: 20px;
-    height: 20px;
-    margin-right: 5px;
-    vertical-align: middle;
-}
-
-.search_bar label {
-    color: #21c3fc;
-    font-size: 14px;
-    vertical-align: middle;
-}
-
-.search_bar input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #21c3fc;
-    border-radius: 4px;
-    background-color: #081028;
-    color: #21c3fc;
-    transition: all 0.3s ease;
-}
-
-.search_bar input[type="text"]::placeholder {
-    color: #21c3fc;
-    opacity: 0.7;
-}
-
-.search_bar .button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #21c3fc;
-    color: #081028;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.search_bar .button:hover {
-    background-color: #1a9ed8;
-}
-
-/* styles.css */
-
-/* General styles for input fields */
-input[type="text"],
-input[type="submit"],
-input[type="reset"],
-input[type="date"],
-button,
-select {
-    padding: 10px;
-    margin: 5px;
-    border: 1px solid #21c3fc;
-    border-radius: 4px;
-    font-size: 16px;
-    background-color: #081028;
-    color: #21c3fc;
-    transition: all 0.3s ease;
-}
-
-/* Focus styles for input fields */
-input[type="text"]:focus,
-input[type="submit"]:focus,
-input[type="reset"]:focus,
-input[type="date"]:focus,
-button:focus,
-select:focus {
-    border-color: #cb3cff;
-    box-shadow: 0 0 5px rgba(203, 60, 255, 0.5);
-    outline: none;
-}
-
-/* Hover styles for buttons and submit/reset inputs */
-input[type="submit"]:hover,
-input[type="reset"]:hover,
-button:hover {
-    background-color: #cb3cff;
-    color: white;
-    cursor: pointer;
-}
-
-/* Styles for labels */
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #21c3fc;
-}
-
-/* Styles for tables */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 18px;
-    text-align: left;
-    background-color: #081028;
-    color: #21c3fc;
-    border: none;
-}
-
-table th,
-table td {
-    padding: 15px;
-    border: none;
-}
-
-/* Styles for table rows */
-table tr:nth-child(even) {
-    background-color: #0b1739;
-}
-
-table tr:nth-child(odd) {
-    background-color: #081028;
-}
-
-.icon {
-    fill: #007bff;
-    stroke: #007bff;
-    cursor: pointer;
-}
-
-/* Hover styles for table rows */
-table tr:hover,
-table tr:hover .icon {
-    background-color: #21c3fc;
-    color: #081028;
-    fill: #081028;
-    stroke: #081028;
-    transition: all ease-in-out 0.1s;
-}
-
-/* Styles for checkboxes and radio buttons */
-input[type="checkbox"],
-input[type="radio"] {
-    margin-right: 10px;
-}
-
-/* Styles for buttons */
-button {
-    background-color: #21c3fc;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #cb3cff;
-}
-
-/* CSS cho header */
-header {
-    background: linear-gradient(45deg, #081028, #0b1739);
-    color: white;
-    padding: 10px 0;
-    text-align: center;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-nav {
-    display: flex;
-}
-
-nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-nav ul li {
-    display: inline;
-    margin-right: 20px;
-}
-
-nav ul li a {
-    color: #21c3fc;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-nav ul li a:hover {
-    text-decoration: underline;
-}
-
-.auth-links {
-    float: right;
-    margin-right: 20px;
-}
-
-.auth-links a {
-    color: #21c3fc;
-    text-decoration: none;
-    margin-left: 10px;
+.footer p {
+	padding: 10px;
+	text-align: center;
 }

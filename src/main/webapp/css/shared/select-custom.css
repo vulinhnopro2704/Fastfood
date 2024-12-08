@@ -1,0 +1,71 @@
+.dropdown {
+	position: relative;
+	width: 200px;
+}
+
+.dropdown-toggle {
+	width: 100%;
+	background-color: var(--bg-color);
+	color: var(--text-color);
+	border: none;
+	border-radius: 3px;
+	padding: 10px 20px;
+	text-align: left;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.dropdown-toggle .arrow {
+	font-size: 14px;
+}
+
+.dropdown-menu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	background-color: var(--bg-color);
+	color: var(--text-color);
+	border-radius: 3px;
+	position: absolute;
+	width: 100%;
+	top: 100%;
+	left: 0;
+	opacity: 0;
+	visibility: hidden;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+	transform: translateY(-10px);
+	transition: all 0.3s ease;
+	z-index: 10;
+}
+
+.dropdown-menu .dropdown-item {
+	padding: 10px 20px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+}
+
+.dropdown-menu .dropdown-item .dot {
+	width: 10px;
+	height: 10px;
+	background-color: #a0a0a0;
+	border-radius: 50%;
+	margin-right: 10px;
+}
+
+.dropdown-menu .dropdown-item.active .dot {
+	background-color: var(--text-muted);
+}
+
+.dropdown-menu .dropdown-item:hover {
+	background-color: var(--bg-hover);
+}
+
+.dropdown:hover .dropdown-menu {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+}
