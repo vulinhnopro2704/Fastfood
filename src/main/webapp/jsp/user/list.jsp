@@ -35,11 +35,9 @@
             <td><c:out value="${user.id}" /></td>
             <td><c:out value="${user.fullName}" /></td>
             <td><c:out value="${user.email}" /></td>
-<%--&lt;%&ndash;            <td><c:out value="${user.password}" /></td>&ndash;%&gt;--%>
             <td><c:out value="${user.phoneNumber}" /></td>
             <td><c:out value="${user.address}" /></td>
             <td><c:out value="${user.role}" /></td>
-<%--            1--%>
         </tr>
     </c:forEach>
    </table>

@@ -1,7 +1,8 @@
 function callController(path, data, callback, method = 'GET') {
-    const baseUrl = '/final_exam_war_exploded/controller/controller.php?path=';
+    const baseUrl = '/final_exam_war_exploded/OrderDetailController?path=';
     const url = method.toUpperCase() === 'GET' ? `${baseUrl + encodeURIComponent(path)}&${data}` : baseUrl + encodeURIComponent(path);
     console.log('Request URL:', url);
+    console.log('request baseUrl : ', baseUrl);
     console.log('Request Method:', method.toUpperCase());
     console.log('Request Data:', data);
 
@@ -10,7 +11,7 @@ function callController(path, data, callback, method = 'GET') {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: method.toUpperCase() === 'POST' ? data : undefined
+        body: method.toUpperCase() === 'POST' ? `id : ${data}` : undefined
     }).then(response => {
         console.log("Response Status:", response.status);
         console.log("Response Headers:", response.headers);

@@ -15,9 +15,11 @@
         <div class="cart-item-total">
             ${param.itemTotal}
         </div>
+        <input type="hidden" name="idOrderDetail" value="${param.idOrderDetail}" disabled >
     </div>
     <div class="cart-item-bottom">
-        <input type="text" placeholder="Ghi chú">
-        <button class="btn">${param.buttonText}</button>
+        <input type="text" placeholder="Ghi chú" value="${param.message}">
+        <a href="/final_exam_war_exploded/TrangChu/OrderDetail/deleteFood?id=${param.idOrderDetail}" > <button class="btn">${param.buttonText}</button></a>
+<%--        <button class="btn">${param.buttonText}</button>--%>
     </div>
 </div>

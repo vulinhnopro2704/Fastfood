@@ -58,6 +58,19 @@
 
                 <!-- List of cards -->
                 <div class="card-container">
+                    <c:forEach var="food" items="${listFoods}">
+                        <c:url var="imageUrl" value="/assets/images/chicken.jpeg" />
+                        <jsp:include page="/jsp/components/card.jsp">
+                            <jsp:param name="imageSrc" value="${imageUrl}" />
+                            <jsp:param name="altText" value="Healthy Noodles" />
+                            <jsp:param name="title" value="${food.name}" />
+                            <jsp:param name="price" value="${food.price}" />
+                            <jsp:param name="description" value="${food.description}" />
+                            <jsp:param name="idFood" value="${food.id}" />
+                            <jsp:param name="buttonText" value="Thêm" />
+                        </jsp:include>
+                    </c:forEach>
+
                     <c:forEach var="i" begin="1" end="5">
                         <c:url var="imageUrl" value="/assets/images/chicken.jpeg" />
                         <jsp:include page="/jsp/components/card.jsp">
@@ -69,6 +82,7 @@
                             <jsp:param name="buttonText" value="Thêm" />
                         </jsp:include>
                     </c:forEach>
+
                 </div>
             </main>
         </div>
@@ -78,18 +92,34 @@
     <div class="cart-container" id="cart">
         <div class="cart-header">Giỏ hàng của bạn</div>
         <div class="cart-items">
-            <c:forEach var="i" begin="1" end="3">
+            <c:forEach var="foodorderDetail" items="${listFoodOrderDetails}">
                 <c:url var="imageUrl" value="/assets/images/chicken.jpeg" />
                 <jsp:include page="/jsp/components/cart-item.jsp">
                     <jsp:param name="imageSrc" value="${imageUrl}" />
                     <jsp:param name="altText" value="Product" />
-                    <jsp:param name="itemName" value="Spicy seasoned seafood noodles" />
-                    <jsp:param name="itemPrice" value="230,000đ" />
-                    <jsp:param name="itemQty" value="2" />
-                    <jsp:param name="itemTotal" value="460,000đ" />
+                    <jsp:param name="itemName" value="${foodorderDetail.name}" />
+                    <jsp:param name="itemPrice" value="${foodorderDetail.price}" />
+                    <jsp:param name="itemQty" value="${foodorderDetail.quantity}" />
+                    <jsp:param name="itemTotal" value="${foodorderDetail.subtotal}" />
+                    <jsp:param name="message" value="${foodorderDetail.message}" />
+                    <jsp:param name="idOrderDetail" value="${foodorderDetail.orderDetailId}" />
                     <jsp:param name="buttonText" value="Xóa" />
                 </jsp:include>
             </c:forEach>
+
+<%--            <c:forEach var="i" begin="1" end="3">--%>
+<%--                <c:url var="imageUrl" value="/assets/images/chicken.jpeg" />--%>
+<%--                <jsp:include page="/jsp/components/cart-item.jsp">--%>
+<%--                    <jsp:param name="imageSrc" value="${imageUrl}" />--%>
+<%--                    <jsp:param name="altText" value="Product" />--%>
+<%--                    <jsp:param name="itemName" value="Spicy seasoned seafood noodles" />--%>
+<%--                    <jsp:param name="itemPrice" value="230,000đ" />--%>
+<%--                    <jsp:param name="itemQty" value="2" />--%>
+<%--                    <jsp:param name="itemTotal" value="460,000đ" />--%>
+<%--                    <jsp:param name="buttonText" value="Xóa" />--%>
+<%--                </jsp:include>--%>
+<%--            </c:forEach>--%>
+
         </div>
         <div class="cart-footer">
             <button class="btn">Order</button>
@@ -103,8 +133,17 @@
         cartToggle.addEventListener('click', () => {
             cart.classList.toggle('active');
         });
+
+        function addFoodToCart(idFood) {
+            console.log("addFood ", idFood)
+            callController('/OrderDetail/addFood', idFood, () => {
+                window.location.reload();
+            }, 'GET');
+        }
+
+
     </script>
-    <jsp:include page="/component/footer.jsp" />
+    <jsp:include page="/component/footer.jsp"/>
 </body>
 
 </html>

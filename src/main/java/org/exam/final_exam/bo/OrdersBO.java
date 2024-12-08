@@ -18,8 +18,8 @@ public class OrdersBO {
         return  ordersDAO.getAllOrders();
     }
 
-    public List<Orders> getOrdersListByUserId(int userId){
-        return ordersDAO.getAllOrdersByUserId(userId);
+    public Orders getOrdersByUserId(int userId){
+        return ordersDAO.getOrdersByUserId(userId);
     }
 
     public Orders getOrderById(int id){
@@ -27,8 +27,8 @@ public class OrdersBO {
     }
 
 
-    public int addOrder(int userId, Date orderDate, long totalamount,int status,String type){
-        Orders orders = new Orders(userId, orderDate, totalamount, status, type);
+    public int addOrder(int userId, long totalamount,int status,String type){
+        Orders orders = new Orders(userId, totalamount, status, type);
 
         return  ordersDAO.addOrder(orders);
     }

@@ -42,6 +42,21 @@ public class UsersDAO {
                 .build(), id);
     }
 
+    public Users findUserSignIn(String email,String fullname,String phone,String address) {
+        String sql = "SELECT * FROM users WHERE email = ? and fullname = ? and phonenumber = ? and address = ? LIMIT 1";
+        return genericDAO.find(sql, rs -> Users.builder()
+                .id(rs.getInt("id"))
+                .fullName(rs.getString("fullname"))
+                .email(rs.getString("email"))
+                .passWord(rs.getString("password"))
+                .phoneNumber(rs.getString("phonenumber"))
+                .address(rs.getString("address"))
+                .role(rs.getString("role"))
+                .createAt(rs.getDate("createdat"))
+                .build(), email,fullname,phone,address);
+    }
+
+
     public Users getUserByEmailPassword(String email, String password) {
         Users user = new Users();
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -72,7 +87,8 @@ public class UsersDAO {
         String encodedPassword = encoder.encode(user.getPassWord());
         String sql = "INSERT INTO users(fullname,email,password,phonenumber,address,role,createdat) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
-        return genericDAO.executeUpdate(sql,user.getFullName(),user.getEmail(),encodedPassword,user.getPhoneNumber(),user.getAddress(),user.getRole(),user.getCreateAt());
+        java.sql.Date sqlDate = new java.sql.Date(user.getCreateAt().getTime());
+        return genericDAO.executeUpdate(sql,user.getFullName(),user.getEmail(),encodedPassword,user.getPhoneNumber(),user.getAddress(),user.getRole(),sqlDate);
     }
 
     public int updateUser(Users user) {
