@@ -18,6 +18,7 @@ public class DBConnectionPool {
         dataSource.setMaxIdle(10);
         dataSource.setMaxOpenPreparedStatements(100);
         dataSource.setDriverClassName("org.postgresql.Driver");
+
     }
 
     public static synchronized DBConnectionPool getInstance() {
