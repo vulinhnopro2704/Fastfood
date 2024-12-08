@@ -1,0 +1,41 @@
+/* Sidebar Styles */
+.sidebar {
+	background-color: var(--color-primary);
+	color: var(--color-quaternary);
+	width: 80px;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 20px;
+}
+
+.sidebar-item {
+	width: 100%;
+	text-align: center;
+	margin: 15px 0;
+}
+
+.sidebar-link {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	color: var(--color-quaternary);
+	text-decoration: none;
+	font-size: 14px;
+	transition: all 0.3s ease;
+	padding: 10px 0;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+	background-color: var(--color-secondary);
+	color: var(--color-accent3);
+	border-radius: 10px;
+}
+
+.sidebar-link i {
+	font-size: 20px;
+	margin-bottom: 5px;
+}

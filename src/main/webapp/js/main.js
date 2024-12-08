@@ -1,5 +1,5 @@
 function callController(path, data, callback, method = 'GET') {
-    const baseUrl = '/final_exam/controller/controller.php?path=';
+    const baseUrl = '/final_exam_war_exploded/controller/controller.php?path=';
     const url = method.toUpperCase() === 'GET' ? `${baseUrl + encodeURIComponent(path)}&${data}` : baseUrl + encodeURIComponent(path);
     console.log('Request URL:', url);
     console.log('Request Method:', method.toUpperCase());

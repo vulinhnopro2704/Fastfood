@@ -7,8 +7,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="<c:url value="/css/styles.css" />">
-  <link rel="stylesheet" type="text/css" href="<c:url value="/css/footer.css" />">
-  <link rel="stylesheet" type="text/css" href="<c:url value="/css/form.css" />">
   <title>Document</title>
 </head>
 
