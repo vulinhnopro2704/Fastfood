@@ -23,9 +23,9 @@ public class OrdersDAO {
                 .type(rs.getString("type"))
                 .build());
     }
-    public List<Orders> getAllOrdersByUserId(int userId) {
-        String sql = "SELECT * FROM orders where userId = ?";
-        return genericDAO.executeQuery(sql, rs -> Orders.builder()
+    public Orders getOrdersByUserId(int userId) {
+        String sql = "SELECT * FROM orders where userId = ? and status = 0 LIMIT 1";
+        return genericDAO.find(sql, rs -> Orders.builder()
                 .id(rs.getInt("id"))
                 .userId(rs.getInt("userId"))
                 .orderDate(rs.getDate("orderDate"))
@@ -50,8 +50,10 @@ public class OrdersDAO {
     }
 
     public int addOrder(Orders order) {
-        String sql = "INSERT INTO orders(userId, orderDate, totalAmount, status,createdat, type) VALUES(?, ?, ?, ?, ?, ?)";
-        return genericDAO.executeUpdate(sql,order.getUserId(), order.getOrderDate(), order.getTotalAmount(), order.getStatus(),order.getCreateAt(), order.getType());
+        String sql = "INSERT INTO orders(userId, totalAmount, status,createdat, type) VALUES(?, ?, ?, ?, ?)";
+
+        java.sql.Date sqlDate = new java.sql.Date(order.getCreateAt().getTime());
+        return genericDAO.executeUpdate(sql,order.getUserId(), order.getTotalAmount(), order.getStatus(),sqlDate, order.getType());
     }
 
     public int updateOrder(Orders order) {

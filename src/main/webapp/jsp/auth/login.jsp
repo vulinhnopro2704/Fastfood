@@ -19,8 +19,8 @@
         <img src="<c:url value="/assets/images/pasta.png" />" alt="Noodle">
         <form action='<c:url value="/auth/login" />' method="post">
             <div class="form-group">
-                <label for="username">Tên đăng nhập</label>
-                <input type="text" id="username" name="username" class="form-control" required>
+                <label for="email">Tên đăng nhập</label>
+                <input type="text" id="email" name="email" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="password">Mật khẩu</label>

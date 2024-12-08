@@ -23,6 +23,11 @@ public class UsersBO {
         Users user = new Users(fullname, email, password, phonenumber, address, role);
         return usersDAO.addUser(user);
     }
+
+    public Users findUserSignIn(String email, String fullname,String phone,String address) {
+        return usersDAO.findUserSignIn(email, fullname, phone, address);
+    }
+
     public int updateUser(Users user) {
         return usersDAO.updateUser(user);
     }

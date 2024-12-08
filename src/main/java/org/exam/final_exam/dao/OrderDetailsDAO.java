@@ -2,7 +2,8 @@ package org.exam.final_exam.dao;
 
 
 import org.exam.final_exam.entity.OrderDetails;
-import org.exam.final_exam.entity.VacXin;
+import org.exam.final_exam.entity.foodOrderDetails;
+
 
 import java.util.List;
 public class OrderDetailsDAO {
@@ -47,9 +48,23 @@ public class OrderDetailsDAO {
                 .build(), id);
     }
 
+    public List<foodOrderDetails> getFoodOrderDetailsByOrderId(int orderId) {
+        String sql = "SELECT od.id,od.quantity,od.subtotal,od.message, f.name ,f.price,f.imageLink\n" +
+                "FROM orderdetails od INNER JOIN foods f ON od.foodid = f.id\n" +
+                "where od.orderid = ?;";
+        return genericDAO.executeQuery(sql, rs -> foodOrderDetails.builder()
+                .orderDetailId(rs.getInt("id"))
+                .quantity(rs.getInt("quantity"))
+                .subtotal(rs.getDouble("subtotal"))
+                .message(rs.getString("message"))
+                .name(rs.getString("name"))
+                .price(rs.getDouble("price"))
+                .imageLink(rs.getString("imageLink"))
+                .build(),orderId);
+    }
     public int addOrderDetail (OrderDetails orderDetail) {
         String sql = "INSERT INTO orderdetails(orderId, foodId, quantity, subtotal,message) VALUES(?, ?, ?, ?, ?)";
-        return genericDAO.executeUpdate(sql, orderDetail.getOrderId(), orderDetail.getFoodId(), orderDetail.getQuantity(), orderDetail.getSubtotal());
+        return genericDAO.executeUpdate(sql, orderDetail.getOrderId(), orderDetail.getFoodId(), orderDetail.getQuantity(), orderDetail.getSubtotal(),orderDetail.getMessage());
     }
 
     public int updateOrderDetail(OrderDetails orderDetail) {
@@ -60,6 +75,11 @@ public class OrderDetailsDAO {
     public int deleteOrderDetail(int id) {
         String sql = "DELETE FROM orderdetails WHERE id = ?";
         return genericDAO.executeUpdate(sql, id);
+    }
+
+    public boolean isExistFoodInOrderDetail(int idorder , int foodId) {
+        String sql = "SELECT * FROM orderdetails WHERE orderid = ? and foodid = ?";
+        return genericDAO.isExist(sql, idorder ,foodId);
     }
 
     public boolean isExistOrderDetail(int id) {

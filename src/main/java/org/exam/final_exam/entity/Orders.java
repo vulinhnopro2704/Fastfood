@@ -19,9 +19,8 @@ public class Orders {
     private Date createAt;
     private String type;
 
-    public Orders( int userId, Date orderDate, double totalAmount,int status,String type) {
+    public Orders( int userId, double totalAmount,int status,String type) {
         this.userId = userId;
-        this.orderDate = orderDate;
         this.totalAmount = totalAmount;
         this.status = status;
         this.createAt = new Date();

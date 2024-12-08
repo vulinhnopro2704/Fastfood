@@ -7,8 +7,12 @@
         <h3>${param.title}</h3>
         <p class="price">${param.price}</p>
         <p class="description">${param.description}</p>
+        <input type="hidden" name="idFood" value="${param.idFood}" disabled >
     </div>
+
     <div class="card-action">
-        <button>${param.buttonText}</button>
+<%--        <button onclick="addFoodToCart(${param.idFood})">${param.buttonText}</button>--%>
+        <a href="/final_exam_war_exploded/TrangChu/OrderDetail/addFood?id=${param.idFood}" ><button></button>${param.buttonText}</a>
     </div>
 </div>
+
