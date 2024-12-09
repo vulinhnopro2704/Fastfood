@@ -49,22 +49,17 @@ public class AuthController extends HttpServlet {
             case "/auth/signup":
                 request.getRequestDispatcher("/jsp/auth/sign-up.jsp").forward(request, response);
                 break;
-            case "/auth/logout":
-//                response.sendRedirect(request.getContextPath() + "/auth/login");
-                PrintWriter out1 = response.getWriter();
-                out1.println("<html><body>");
-                out1.println("<h1>Logout</h1>");
-                out1.println("</body></html>");
+            default:
                 break;
-
-            default: break;
         }
     }
+
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
         String path = request.getServletPath();
         response.setContentType("text/html");
         System.out.println("request.getContextPath() : " + request.getContextPath());
         switch (path) {
+
             case "/auth/login":
                 System.out.println("email is " + request.getParameter("email") + " password is " + request.getParameter("password"));
                 Users user = null;
@@ -118,7 +113,13 @@ public class AuthController extends HttpServlet {
                    }
                    break;
 
-
+               case "/auth/logout":
+                   HttpSession session = request.getSession();
+                   session.invalidate();
+                   response.sendRedirect(request.getContextPath() + "/auth/login");
+                   break;
+            default:
+                break;
         }
 
     }
