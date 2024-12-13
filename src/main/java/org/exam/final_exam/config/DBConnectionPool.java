@@ -11,7 +11,7 @@ public class DBConnectionPool {
 
     private DBConnectionPool() {
         dataSource = new BasicDataSource();
-        dataSource.setUrl("jdbc:postgresql://ep-silent-cherry-a139vucf.ap-southeast-1.aws.neon.tech/neondb?user=neondb_owner&password=5EDdVRUZy7YG&sslmode=require");
+        dataSource.setUrl("jdbc:postgresql://ep-silent-cherry-a139vucf.ap-southeast-1.aws.neon.tech/neondb?user=neondb_owner&password=5EDdVRUZy7YG&sslmode=require&charSet=UTF8");
         dataSource.setUsername("neondb_owner");
         dataSource.setPassword("5EDdVRUZy7YG");
         dataSource.setMinIdle(5);

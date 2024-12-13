@@ -10,11 +10,7 @@ import org.exam.final_exam.bo.FoodsBO;
 import org.exam.final_exam.bo.OrderDetailsBO;
 import org.exam.final_exam.bo.OrdersBO;
 import org.exam.final_exam.bo.UsersBO;
-import org.exam.final_exam.entity.Foods;
-import org.exam.final_exam.entity.OrderDetails;
-import org.exam.final_exam.entity.foodOrderDetails;
-import org.exam.final_exam.entity.Orders;
-import org.exam.final_exam.entity.Users;
+import org.exam.final_exam.entity.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,14 +18,16 @@ import java.util.List;
 
 @WebServlet(name = "AuthController", urlPatterns = {"/auth", "/auth/login", "/auth/logout", "/auth/signup",})
 public class AuthController extends HttpServlet {
-
+    private final OrderDetailsBO orderDetailsBO;
     private final UsersBO usersBO ;
     private final OrdersBO ordersBO ;
-
+    private final FoodsBO foodsBO;
 
     public AuthController() {
         usersBO = new UsersBO();
         ordersBO = new OrdersBO();
+        foodsBO = new FoodsBO();
+        orderDetailsBO = new OrderDetailsBO();
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -64,33 +62,19 @@ public class AuthController extends HttpServlet {
                 System.out.println("email is " + request.getParameter("email") + " password is " + request.getParameter("password"));
                 Users user = null;
                 user = usersBO.getUserEmailPassword(request.getParameter("email"), request.getParameter("password"));
-               if (user == null  ) {
-                   response.sendRedirect(request.getContextPath() + "/jsp/auth/login.jsp");
-               }
-               else{
-                   // lay order cua user login
-                   Orders orderUser = ordersBO.getOrdersByUserId(user.getId());
-                    System.out.println("orderid : " + orderUser.getId());
+                   if (user == null  ) {
+                       System.out.println("user null");
+                       response.sendRedirect(request.getContextPath() + "/jsp/auth/login.jsp");
+                   }
+                   else{
+                       HttpSession session = request.getSession();
+                       session.setAttribute("email", user.getEmail());
+                       session.setAttribute("role", user.getRole());
+                       session.setAttribute("id", user.getId());
+                       session.setAttribute("orderId", ordersBO.getOrdersByUserId(user.getId()).getId());
 
-                   HttpSession session = request.getSession();  // Lấy đối tượng session
-                   session.setAttribute("email", user.getEmail());
-                   session.setAttribute("role", user.getRole());
-                   session.setAttribute("id", user.getId());
-                   session.setAttribute("orderId", orderUser.getId());
-
-//                   request.getRequestDispatcher("index.jsp").forward(request, response);
-//                   // get all food from database
-//                    List<Foods> listFoods = foodsBO.getAllFoods();
-//                   request.setAttribute("listFoods", listFoods);
-////                   response.sendRedirect(request.getContextPath() + "/");
-//                   // get all foodOrderDetail from cart user login
-
-//                    List<foodOrderDetails> listFoodOrderDetails = orderDetailsBO.getFoodOrderDetailsByOrderId(orderUser.getId());
-//                    request.setAttribute("listFoodOrderDetails", listFoodOrderDetails);
-//                   request.getRequestDispatcher("/").forward(request, response);
-                   response.sendRedirect(request.getContextPath() + "/TrangChu");
-
-               }
+                       response.sendRedirect(request.getContextPath() + "/");
+                   }
                   break;
                case "/auth/signup":
                    String email = request.getParameter("email");
@@ -105,11 +89,11 @@ public class AuthController extends HttpServlet {
                        // tao moi order cho user signin
                        int addNewOrder = ordersBO.addOrder(userSignin.getId(),0,0,"TAKEAWAY");
                         if(addNewOrder > 0){
-                            response.sendRedirect(request.getContextPath() + "/jsp/auth/login.jsp");
+                            response.sendRedirect(request.getContextPath() + "/auth/login");
                         }
                    }
                    else{
-                       response.sendRedirect(request.getContextPath() + "/jsp/auth/sign-up.jsp");
+                       response.sendRedirect(request.getContextPath() + "/auth/signup");
                    }
                    break;
 

@@ -11,8 +11,7 @@
     </div>
 
     <div class="card-action">
-<%--        <button onclick="addFoodToCart(${param.idFood})">${param.buttonText}</button>--%>
-        <a href="/final_exam_war_exploded/TrangChu/OrderDetail/addFood?id=${param.idFood}" ><button></button>${param.buttonText}</a>
+        <button onclick="addFoodToCart(${param.idFood})">${param.buttonText}</button>
     </div>
 </div>
 
