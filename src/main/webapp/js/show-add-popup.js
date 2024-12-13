@@ -18,8 +18,7 @@ function showAddFood(id) {
                 background-color: #25263b;
                 padding: 20px;
                 border-radius: 8px;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-                width: 400px;
+                width: 500px;
             }
 
             .add-dish-container h2 {
@@ -92,48 +91,97 @@ function showAddFood(id) {
                 background-color: #388e3c;
             }
 
-            .image-preview {
+            #drop-area {
                 width: 100%;
-                height: 150px;
-                background-color: #1e1e2f;
-                border: 2px dashed #b3b3b3;
-                border-radius: 5px;
+                height: 300px;
+                padding: 30px;
+                border-radius: 20px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                margin-bottom: 10px;
-                overflow: hidden;
-                position: relative;
+                background-color: #1e1e2f;
             }
-
-            .image-preview img {
-                max-width: 100%;
-                max-height: 100%;
+        
+            @keyframes dropAreaPulse {
+                0% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.1);
+                }
+                100% {
+                    transform: scale(1);
+                }
             }
-
-            .hidden {
-                display: none;
+        
+            @keyframes imgViewBounce {
+                0% {
+                    transform: translateY(0);
+                }
+                50% {
+                    transform: translateY(-10px);
+                }
+                100% {
+                    transform: translateY(0);
+                }
             }
-
-            /* Cải thiện UI khi kéo thả */
-            .image-preview.drag-over {
-                background-color: rgba(255, 255, 255, 0.2);
+        
+            #drop-area.drag-over {
+                opacity: 0.7;
+                animation: dropAreaPulse 0.5s ease-in-out infinite;
             }
+        
+            #drop-area.drag-over #img-view {
+                animation: imgViewBounce 0.5s ease-in-out infinite;
+            }
+        
+            #img-view {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 20px;
+                border: 2px dashed #bbb5ff;
+                font-size: 16px;
+                color: #bbb5ff;
+                text-align: center;
+                cursor: pointer;
+                background: #1e1e2f center;
+                background-size: cover;
+            }
+        
+            #img-view img {
+                width: 100px;
+                margin-top: 25px;
+            }
+        
+            #img-view .heading {
+                font-size: 20px;
+                margin-top: 10px;
+                color: #ffffff;
+                font-weight: 500;
+            }
+        
+            #img-view .sub-heading {
+                font-size: 16px;
+                margin-top: 5px;
+                color: #666;
+            }
+            
         </style>
     `;
-
     const html = `
         <div class="overlay" id="overlay">
             <div class="add-dish-container">
                 <h2>Thêm món ăn</h2>
                 <form id="add-dish-form" method="post" action="/final_exam_war_exploded/food" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="dish-image">Ảnh món ăn</label>
-                        <div class="image-preview" id="image-preview">
-                            <span>Chọn ảnh</span>
+                    <label for="input-file" id="drop-area">
+                        <input type="file" id="input-file" name="image" accept="image/*" hidden>
+                        <div id="img-view">
+                            <img src="/final_exam_war_exploded/assets/default/upload.png" alt="Drag and drop here">
+                            <p class="heading">Drag and drop or click here</p>
+                            <p class="sub-heading">to upload image</p>
                         </div>
-                        <input type="file" id="dish-image" name="image" accept="image/*" class="hidden">
-                    </div>
+                    </label>
                 
                     <div class="form-group">
                         <label for="dish-name">Tên món</label>
@@ -168,53 +216,39 @@ function showAddFood(id) {
             </div>
         </div>
     `;
-
     // Append styles and content to the body
     document.head.insertAdjacentHTML('beforeend', style);
     document.body.insertAdjacentHTML('beforeend', html);
 
-    const dishImageInput = document.getElementById('dish-image');
-    const imagePreview = document.getElementById('image-preview');
-    const overlay = document.getElementById('overlay');
+    const dropArea = document.getElementById('drop-area');
+    const inputFile = document.getElementById('input-file');
+    const imgView = document.getElementById('img-view');
     const closePopupButton = document.getElementById('close-popup');
 
-    imagePreview.addEventListener('click', () => {
-        dishImageInput.click();
+    dropArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropArea.classList.add('drag-over');
     });
 
-    dishImageInput.addEventListener('change', (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                imagePreview.innerHTML = `<img src="${e.target.result}" alt="Dish Image">`;
-            };
-            reader.readAsDataURL(file);
-        }
+    dropArea.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        dropArea.classList.remove('drag-over');
     });
 
-    imagePreview.addEventListener('dragover', (event) => {
-        event.preventDefault();
-        imagePreview.classList.add('drag-over');
+    dropArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropArea.classList.remove('drag-over');
+        inputFile.files = e.dataTransfer.files;
+        uploadImage();
     });
 
-    imagePreview.addEventListener('dragleave', () => {
-        imagePreview.classList.remove('drag-over');
-    });
+    inputFile.addEventListener('change', uploadImage);
 
-    imagePreview.addEventListener('drop', (event) => {
-        event.preventDefault();
-        imagePreview.classList.remove('drag-over');
-
-        const file = event.dataTransfer.files[0];
-        if (file && file.type.startsWith('image')) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                imagePreview.innerHTML = `<img src="${e.target.result}" alt="Dish Image">`;
-            };
-            reader.readAsDataURL(file);
-        }
-    });
+    function uploadImage() {
+        let imgLink = URL.createObjectURL(inputFile.files[0]);
+        imgView.style.backgroundImage = `url(${imgLink})`;
+        imgView.textContent = '';
+    }
 
     closePopupButton.addEventListener('click', () => {
         overlay.remove();
