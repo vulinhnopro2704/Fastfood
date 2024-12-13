@@ -3,7 +3,7 @@ package org.exam.final_exam.entity;
 
 import lombok.*;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Builder
 @Getter
@@ -25,6 +25,6 @@ public class Foods {
         this.price = price;
         this.imageLink = imageLink;
         this.categoryId = categoryId;
-        this.createAt = new Date();
+        this.createAt = new Date(System.currentTimeMillis());
     }
 }

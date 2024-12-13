@@ -30,4 +30,7 @@ public class FoodsBO {
         return foodsDAO.deleteFood(id);
     }
 
+    public void saveFood(Foods food) {
+        foodsDAO.saveFood(food);
+    }
 }

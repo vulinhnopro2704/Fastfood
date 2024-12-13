@@ -103,6 +103,7 @@ function showAddFood(id) {
                 align-items: center;
                 margin-bottom: 10px;
                 overflow: hidden;
+                position: relative;
             }
 
             .image-preview img {
@@ -113,6 +114,11 @@ function showAddFood(id) {
             .hidden {
                 display: none;
             }
+
+            /* Cải thiện UI khi kéo thả */
+            .image-preview.drag-over {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
         </style>
     `;
 
@@ -120,40 +126,40 @@ function showAddFood(id) {
         <div class="overlay" id="overlay">
             <div class="add-dish-container">
                 <h2>Thêm món ăn</h2>
-                <form id="add-dish-form">
+                <form id="add-dish-form" method="post" action="/final_exam_war_exploded/food" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="dish-image">Ảnh món ăn</label>
                         <div class="image-preview" id="image-preview">
                             <span>Chọn ảnh</span>
                         </div>
-                        <input type="file" id="dish-image" accept="image/*" class="hidden">
+                        <input type="file" id="dish-image" name="image" accept="image/*" class="hidden">
                     </div>
-
+                
                     <div class="form-group">
                         <label for="dish-name">Tên món</label>
-                        <input type="text" id="dish-name" placeholder="Nhập tên món">
+                        <input type="text" id="dish-name" name="name" placeholder="Nhập tên món">
                     </div>
-
+                
                     <div class="form-group">
                         <label for="dish-category">Phân loại</label>
-                        <select id="dish-category">
-                            <option value="noodle">Noodle</option>
-                            <option value="rice">Rice</option>
-                            <option value="dessert">Dessert</option>
-                            <option value="beverage">Beverage</option>
+                        <select id="dish-category" name="categoryId">
+                            <option value="1">Noodle</option>
+                            <option value="2">Rice</option>
+                            <option value="3">Dessert</option>
+                            <option value="4">Beverage</option>
                         </select>
                     </div>
-
+                
                     <div class="form-group">
                         <label for="dish-price">Giá</label>
-                        <input type="number" id="dish-price" placeholder="Nhập giá món">
+                        <input type="number" id="dish-price" name="price" placeholder="Nhập giá món">
                     </div>
-
+                
                     <div class="form-group">
                         <label for="dish-description">Mô tả</label>
-                        <textarea id="dish-description" placeholder="Nhập mô tả món"></textarea>
+                        <textarea id="dish-description" name="description" placeholder="Nhập mô tả món"></textarea>
                     </div>
-
+                
                     <div class="form-actions">
                         <button type="button" class="cancel" id="close-popup">Hủy</button>
                         <button type="submit" class="save">Lưu</button>
@@ -187,8 +193,30 @@ function showAddFood(id) {
         }
     });
 
+    imagePreview.addEventListener('dragover', (event) => {
+        event.preventDefault();
+        imagePreview.classList.add('drag-over');
+    });
+
+    imagePreview.addEventListener('dragleave', () => {
+        imagePreview.classList.remove('drag-over');
+    });
+
+    imagePreview.addEventListener('drop', (event) => {
+        event.preventDefault();
+        imagePreview.classList.remove('drag-over');
+
+        const file = event.dataTransfer.files[0];
+        if (file && file.type.startsWith('image')) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                imagePreview.innerHTML = `<img src="${e.target.result}" alt="Dish Image">`;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
     closePopupButton.addEventListener('click', () => {
         overlay.remove();
     });
 }
-

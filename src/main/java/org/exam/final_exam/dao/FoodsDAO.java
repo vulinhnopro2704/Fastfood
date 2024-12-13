@@ -53,4 +53,12 @@ public class FoodsDAO {
         String sql = "SELECT * FROM foods WHERE id = ?";
         return genericDAO.isExist(sql, id);
     }
+
+    public void saveFood(Foods food) {
+        if (isExistFood(food.getId())) {
+            updateFood(food);
+        } else {
+            addFood(food);
+        }
+    }
 }
