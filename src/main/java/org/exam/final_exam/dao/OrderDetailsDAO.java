@@ -67,6 +67,12 @@ public class OrderDetailsDAO {
         return genericDAO.executeUpdate(sql, orderDetail.getOrderId(), orderDetail.getFoodId(), orderDetail.getQuantity(), orderDetail.getSubtotal(),orderDetail.getMessage());
     }
 
+    public int updateQuantity(int idOrderDetail,double subtotal) {
+//        String sql = "UPDATE orderdetails SET quantity = quantity + 1 WHERE id = ?";
+        String sql = "UPDATE orderdetails SET quantity = quantity + 1 ,subtotal = ? * (quantity + 1 ) WHERE id = ?";
+        return genericDAO.executeUpdate(sql, subtotal,idOrderDetail);
+    }
+
     public int updateOrderDetail(OrderDetails orderDetail) {
         String sql = "UPDATE orderdetails SET orderId = ?, foodId = ?, quantity = ?, subtotal = ?, message = ? WHERE id = ?";
         return genericDAO.executeUpdate(sql, orderDetail.getOrderId(), orderDetail.getFoodId(), orderDetail.getQuantity(), orderDetail.getSubtotal(),orderDetail.getMessage(),orderDetail.getId());
@@ -77,9 +83,16 @@ public class OrderDetailsDAO {
         return genericDAO.executeUpdate(sql, id);
     }
 
-    public boolean isExistFoodInOrderDetail(int idorder , int foodId) {
-        String sql = "SELECT * FROM orderdetails WHERE orderid = ? and foodid = ?";
-        return genericDAO.isExist(sql, idorder ,foodId);
+    public OrderDetails isExistFoodInOrderDetail(int idorder , int foodId) {
+        String sql = "SELECT * FROM orderdetails WHERE orderid = ? and foodid = ? limit 1";
+        return genericDAO.find(sql,  rs -> OrderDetails.builder()
+                .id(rs.getInt("id"))
+                .orderId(rs.getInt("orderId"))
+                .foodId(rs.getInt("foodId"))
+                .quantity(rs.getInt("quantity"))
+                .subtotal(rs.getDouble("subtotal"))
+                .message(rs.getString("message"))
+                .build(), idorder,foodId);
     }
 
     public boolean isExistOrderDetail(int id) {

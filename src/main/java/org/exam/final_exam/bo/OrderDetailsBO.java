@@ -27,9 +27,13 @@ public class OrderDetailsBO {
     }
 
     public int addOrderDetails(int orderId, int foodId, int quantity, double subtotal, String message) {
-        if(orderDetailsDAO.isExistFoodInOrderDetail(orderId, foodId)) {
-            return -1;
+//
+        OrderDetails orderDetails = orderDetailsDAO.isExistFoodInOrderDetail(orderId,foodId);
+        if(orderDetails != null){
+            System.out.println("trung food");
+            return orderDetailsDAO.updateQuantity(orderDetails.getId(),subtotal);
         }
+
         OrderDetails orderDetail = new OrderDetails(orderId, foodId, quantity, subtotal, message);
 
         return orderDetailsDAO.addOrderDetail(orderDetail);

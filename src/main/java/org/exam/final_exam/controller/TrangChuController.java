@@ -6,29 +6,29 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.apache.commons.fileupload2.core.DiskFileItemFactory;
+import org.apache.commons.fileupload2.core.FileItem;
+import org.apache.commons.fileupload2.jakarta.servlet6.JakartaServletFileUpload;
 import org.exam.final_exam.bo.FoodsBO;
 import org.exam.final_exam.bo.OrderDetailsBO;
-import org.exam.final_exam.bo.OrdersBO;
-import org.exam.final_exam.bo.UsersBO;
+
+
 import org.exam.final_exam.entity.Foods;
-import org.exam.final_exam.entity.Users;
+
 import org.exam.final_exam.entity.foodOrderDetails;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
-@WebServlet(name = "TrangChuController", urlPatterns = {"/","/TrangChu/OrderDetail/addFood","/TrangChu/OrderDetail/deleteFood"})
+@WebServlet(name = "TrangChuController", urlPatterns = {"/","/Order"})
 public class TrangChuController extends HttpServlet {
-    private final UsersBO usersBO ;
-    private final OrdersBO ordersBO ;
     private final FoodsBO foodsBO ;
     private final OrderDetailsBO orderDetailsBO ;
 
     public TrangChuController() {
-        usersBO = new UsersBO();
-        ordersBO = new OrdersBO();
         foodsBO = new FoodsBO();
         orderDetailsBO = new OrderDetailsBO();
     }
@@ -82,37 +82,52 @@ public class TrangChuController extends HttpServlet {
                 // Chuyển tiếp đến trang JSP
                 request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
                 break;
-
-            case "/TrangChu/OrderDetail/addFood":
-                System.out.println("addFood");
-                String idFoodStr = request.getParameter("id");
-                if (idFoodStr != null) {
-                    int idFood = Integer.parseInt(idFoodStr);
-                    Foods foods = foodsBO.getFoodById(idFood);
-
-                    int addFood = orderDetailsBO.addOrderDetails(idOrder, idFood, 1, foods.getPrice(), "");
-                    if (addFood > 0) {
-                        System.out.println("Thêm món thành công");
-                    }
-                }
-                response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/TrangChu"));
-                break;
-
-            case "/TrangChu/OrderDetail/deleteFood":
-                System.out.println("deleteOrderDetail");
-                String idOrderDetailStr = request.getParameter("id");
-                if (idOrderDetailStr != null) {
-                    int idOrderDetail = Integer.parseInt(idOrderDetailStr);
-                    int deleteOrderDetail = orderDetailsBO.deleteOrderDetails(idOrderDetail);
-                    if (deleteOrderDetail > 0) {
-                        System.out.println("Xóa món thành công");
-                    }
-                }
-                response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/TrangChu"));
-                break;
-
             default:
                 response.sendRedirect(request.getContextPath() + "/404");
+                break;
+        }
+    }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException {
+        String path = request.getServletPath();
+        response.setContentType("text/html");
+        System.out.println("path dpo: " + path);
+        switch (path){
+
+            case "/Order":
+                System.out.println("order");
+                if (!JakartaServletFileUpload.isMultipartContent(request)) {
+                    response.getWriter().println("Error: Form must have enctype=multipart/form-data.");
+                    return;
+                }
+
+                try {
+                    // Khởi tạo Factory và FileUpload handler
+                    DiskFileItemFactory factory = new DiskFileItemFactory.Builder().get();
+                    JakartaServletFileUpload upload = new JakartaServletFileUpload(factory);
+
+                    // Parse request để lấy danh sách các FileItem
+                    List<FileItem> formItems = upload.parseRequest(request);
+
+                    for (FileItem item : formItems) {
+                        if (item.isFormField()) {
+                            // Nếu là trường form thông thường
+                            String fieldName = item.getFieldName();
+                            String fieldValue = item.getString();
+                            System.out.println("Field: " + fieldName + " = " + fieldValue);
+                            response.getWriter().println("Field: " + fieldName + " = " + fieldValue + "<br>");
+
+                        } else {
+                            // Nếu là file upload
+                            String fileName = item.getName();
+                            response.getWriter().println("File: " + fileName + "<br>");
+                        }
+                    }
+                } catch (Exception ex) {
+                    response.getWriter().println("Error: " + ex.getMessage());
+                }
+                break;
+            default :
                 break;
         }
     }

@@ -128,13 +128,17 @@
                 <jsp:param name="itemTotal" value="${foodorderDetail.subtotal}" />
                 <jsp:param name="message" value="${foodorderDetail.message}" />
                 <jsp:param name="idOrderDetail" value="${foodorderDetail.orderDetailId}" />
+                <jsp:param name="idForm" value="orderForm" />
                 <jsp:param name="buttonText" value="Xóa" />
             </jsp:include>
         </c:forEach>
     </div>
+
+    <form id="orderForm" action="/final_exam_war_exploded/Order" method="post" enctype="multipart/form-data">
     <div class="cart-footer">
-        <button class="btn">Order</button>
+        <button class="btn" type="submit" >Order</button>
     </div>
+    </form>
 </div>
 
 <script>
