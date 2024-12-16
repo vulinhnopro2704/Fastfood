@@ -10,11 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
     <link rel="stylesheet" type="text/css" href="<c:url value='/css/styles.css' />">
+    <link rel="stylesheet" type="text/css" href="<c:url value='/css/shared/sidebar.css' />">
     <link rel="stylesheet" type="text/css" href="<c:url value='/css/homepage.css' />">
     <link rel="stylesheet" type="text/css" href="<c:url value='/css/shared/cart.css'/>">
     <link rel="stylesheet" type="text/css" href="<c:url value='/css/shared/card.css' />">
     <link rel="stylesheet" type="text/css" href="<c:url value='/css/shared/select-custom.css' />">
-    <link rel="stylesheet" type="text/css" href="<c:url value='/css/shared/sidebar.css' />">
     <script src="https://kit.fontawesome.com/ee8f6ead9c.js" crossorigin="anonymous"></script>
 </head>
 
@@ -91,6 +91,18 @@
 <!-- Cart -->
 <div class="cart-container" id="cart">
     <div class="cart-header">Giỏ hàng của bạn</div>
+    <div class="cart-type">
+        <button class="btn cart-type-button" onclick="selectOption(this)">
+            Tại quán
+        </button>
+        <button class="btn cart-type-button" onclick="selectOption(this)">
+            Mang về
+        </button>
+        <button class="btn cart-type-button" onclick="selectOption(this)">
+            Ship
+        </button>
+    </div>
+
     <div class="cart-items">
         <c:forEach var="foodorderDetail" items="${listFoodOrderDetails}">
             <c:set var="imageLink" value="${foodorderDetail.imageLink}" />
@@ -135,9 +147,18 @@
 
     function addFoodToCart(idFood) {
         console.log("addFood ", idFood)
-        callController('/OrderDetail/addFood', idFood, () => {
+        callController('<c:url value="/OrderDetail/addFood" />', idFood, () => {
             window.location.reload();
         }, 'GET');
+    }
+
+    function selectOption(button) {
+        // Remove 'selected' class from all buttons
+        const buttons = document.querySelectorAll('.cart-type .btn');
+        buttons.forEach(btn => btn.classList.remove('selected'));
+
+        // Add 'selected' class to the clicked button
+        button.classList.add('selected');
     }
 </script>
 
