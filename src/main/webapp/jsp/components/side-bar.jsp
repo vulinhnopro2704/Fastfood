@@ -2,13 +2,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div class="sidebar">
     <div class="sidebar-item">
-        <a href="#" class="sidebar-link active">
+        <a href="<c:url value="/" />" class="sidebar-link active">
             <i class="fa-solid fa-house"></i>
             <span>Trang chủ</span>
         </a>
     </div>
     <div class="sidebar-item">
-        <a href="#" class="sidebar-link">
+        <a href="<c:url value="/order"/>" class="sidebar-link">
             <i class="fa-regular fa-rectangle-list"></i>
             <span>Đơn hàng</span>
         </a>

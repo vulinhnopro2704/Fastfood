@@ -1,0 +1,105 @@
+.container {
+	display: flex;
+	gap: 20px;
+}
+
+.order-container {
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	flex: 1;
+}
+
+.order-item {
+	background-color: var(--color-secondary);
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	padding: 15px;
+	transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.order-item:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.order-header {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 15px;
+}
+
+.order-date {
+	color: var(--color-quinary);
+}
+
+.order-status {
+	color: var(--color-quaternary);
+}
+
+.status-delivered {
+	color: var(--color-accent3);
+	font-weight: bold;
+}
+
+.order-list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.order-list-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.order-details {
+	display: flex;
+	gap: 15px;
+}
+
+.order-image {
+	width: 70px;
+	height: 70px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 2px solid var(--color-accent3);
+}
+
+.item-title {
+	margin: 0;
+	font-size: 1.1em;
+}
+
+.item-qty-price {
+	color: var(--color-quaternary);
+	font-size: 0.9em;
+}
+
+.order-message {
+	color: var(--color-quaternary);
+	font-style: italic;
+}
+
+.divider {
+	border: none;
+	border-top: 1px solid var(--color-tertiary);
+	margin: 10px 0;
+}
+
+.order-total {
+	display: flex;
+	justify-content: space-between;
+	font-weight: bold;
+	font-size: 1.1em;
+}
+
+.total-price {
+	color: var(--color-accent3);
+}
+
+.total-text {
+	color: var(--color-quinary);
+}

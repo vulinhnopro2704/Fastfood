@@ -2,6 +2,7 @@ package org.exam.final_exam.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -13,7 +14,7 @@ import java.util.List;
 
 
 @WebServlet(name = "OrderDetailController", urlPatterns = {"/OrderDetail/", "/OrderDetail/addFood"})
-public class OrderDetailController {
+public class OrderDetailController extends HttpServlet {
     private final OrderDetailsBO orderDetailsBO;
     public OrderDetailController() {
         orderDetailsBO = new OrderDetailsBO();

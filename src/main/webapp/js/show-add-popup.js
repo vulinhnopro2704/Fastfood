@@ -166,7 +166,6 @@ function showAddFood(id) {
                 margin-top: 5px;
                 color: #666;
             }
-            
         </style>
     `;
     const html = `
