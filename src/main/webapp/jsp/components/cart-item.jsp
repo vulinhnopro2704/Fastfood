@@ -22,8 +22,7 @@
     </div>
     <div class="cart-item-bottom">
 
-<%--        <input type="hidden" name="idOrderdt" value="${param.idOrderDetail}" form="${param.idForm}"  >--%>
-        <input type="hidden" name="subtotal" value="${param.itemTotal}" form="${param.idForm}"  >
+        <input type="hidden" name="idOrderdt" value="${param.idOrderDetail}" form="${param.idForm}"  >
         <input type="text" placeholder="Ghi chú" name="message" value="${param.message}" form="${param.idForm}">
 
 <%--        <a href="/final_exam_war_exploded/TrangChu/OrderDetail/deleteFood?id=${param.idOrderDetail}" > <button class="btn">${param.buttonText}</button></a>--%>
