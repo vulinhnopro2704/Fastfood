@@ -36,6 +36,10 @@ public class FoodController extends HttpServlet {
 
         switch (path) {
             case "/settings":
+
+                List<Foods> listFoods = foodsBO.getAllFoods();
+                request.setAttribute("listFoods", listFoods);
+
                 request.getRequestDispatcher("/jsp/settings/food-manager.jsp").forward(request, response);
             default:
                 break;

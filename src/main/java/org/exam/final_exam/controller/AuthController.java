@@ -18,16 +18,15 @@ import java.util.List;
 
 @WebServlet(name = "AuthController", urlPatterns = {"/auth", "/auth/login", "/auth/logout", "/auth/signup",})
 public class AuthController extends HttpServlet {
-    private final OrderDetailsBO orderDetailsBO;
+
     private final UsersBO usersBO ;
     private final OrdersBO ordersBO ;
-    private final FoodsBO foodsBO;
+
 
     public AuthController() {
         usersBO = new UsersBO();
         ordersBO = new OrdersBO();
-        foodsBO = new FoodsBO();
-        orderDetailsBO = new OrderDetailsBO();
+
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

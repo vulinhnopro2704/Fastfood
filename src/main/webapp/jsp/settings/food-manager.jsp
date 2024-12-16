@@ -27,6 +27,17 @@
             <h2>Quản lý món ăn</h2>
             <div class="menu-grid">
                 <div class="add-new">+ Add new dish</div>
+
+                <c:forEach var="food" items="${listFoods}">
+                    <div class="menu-item">
+                        <i class="fa-solid fa-x menu-item-exit"></i>
+                        <img src="<c:url value="${food.imageLink}" />" alt="${food.description}">
+                        <h3><c:out value="${food.name}" /></h3>
+                        <p><c:out value="${food.price}" /></p>
+                        <button>Sửa món ăn</button>
+                    </div>
+                </c:forEach>
+
                 <div class="menu-item">
                     <i class="fa-solid fa-x menu-item-exit"></i>
                     <img src="<c:url value="/assets/images/pasta.png" />" alt="Spicy seasoned seafood noodles">
