@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ page import="java.util.ArrayList, org.exam.final_exam.entity.Orders" %>
+<%@ page import="java.util.ArrayList, org.exam.final_exam.entity.foodOrderDetails" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,99 +22,41 @@
         <jsp:include page="/jsp/components/side-bar.jsp" />
         <div class="order-container">
             <!-- Order Item -->
-            <div class="order-item">
-                <div class="order-header">
-                    <span class="order-date">02/08/2004</span>
-                    <span class="order-status">Giao hàng tận nơi   <span class="status-delivered">Đã giao</span></span>
-                </div>
-                <hr class="divider">
-                <div class="order-list">
-                    <div class="order-list-item">
-                        <div class="order-details">
-                            <img src="https://via.placeholder.com/70" alt="Noodles" class="order-image">
-                            <div>
-                                <h3 class="item-title">Spicy seasoned seafood noodles</h3>
-                                <p class="item-qty-price">2 x 129.000 đ</p>
-                            </div>
-                        </div>
-                        <p class="order-message">This is the message</p>
+            <c:forEach var="order" items="${orders}">
+                <div class="order-item">
+                    <div class="order-header">
+                        <span class="order-date"><c:out value="${order.orderDate}" /></span>
+                        <span class="order-status"><c:out value="${order.type}" /> <span class="status-delivered">Đã giao</span></span>
                     </div>
+                    <hr class="divider">
+                    <div class="order-list">
+                        <c:forEach var="foodOrder" items="${listFoodOrderDetails}">
+                            <c:if test="${foodOrder.orderId == order.id}">
+                                <div class="order-list-item">
+                                    <div class="order-details">
+                                        <img src="${foodOrder.imageLink}" alt="Noodles" class="order-image">
+                                        <div>
+                                            <h3 class="item-title"><c:out value="${foodOrder.name}" /></h3>
+                                            <p class="item-qty-price"><c:out value="${foodOrder.quantity}" />x<c:out value="${foodOrder.price}" /></p>
+                                        </div>
+                                    </div>
+                                    <p class="order-message"><c:out value="${foodOrder.message}" /></p>
+                                </div>
+                            </c:if>
 
-                    <div class="order-list-item">
-                        <div class="order-details">
-                            <img src="https://via.placeholder.com/70" alt="Noodles" class="order-image">
-                            <div>
-                                <h3 class="item-title">Spicy seasoned seafood noodles</h3>
-                                <p class="item-qty-price">2 x 129.000 đ</p>
-                            </div>
-                        </div>
-                        <p class="order-message">This is the message</p>
-                    </div>
+                        </c:forEach>
 
-                    <div class="order-list-item">
-                        <div class="order-details">
-                            <img src="https://via.placeholder.com/70" alt="Noodles" class="order-image">
-                            <div>
-                                <h3 class="item-title">Spicy seasoned seafood noodles</h3>
-                                <p class="item-qty-price">2 x 129.000 đ</p>
-                            </div>
-                        </div>
-                        <p class="order-message">This is the message</p>
-                    </div>
-                </div>
-                <hr class="divider">
-                <div class="order-total">
-                    <span class="total-text">Tổng cộng:</span>
-                    <span class="total-price">396.000 đ</span>
-                </div>
-            </div>
 
-            <div class="order-item">
-                <div class="order-header">
-                    <span class="order-date">02/08/2004</span>
-                    <span class="order-status">Giao hàng tận nơi   <span class="status-delivered">Đã giao</span></span>
-                </div>
-                <hr class="divider">
-                <div class="order-list">
-                    <div class="order-list-item">
-                        <div class="order-details">
-                            <img src="https://via.placeholder.com/70" alt="Noodles" class="order-image">
-                            <div>
-                                <h3 class="item-title">Spicy seasoned seafood noodles</h3>
-                                <p class="item-qty-price">2 x 129.000 đ</p>
-                            </div>
-                        </div>
-                        <p class="order-message">This is the message</p>
                     </div>
+                    <hr class="divider">
+                    <div class="order-total">
+                        <span class="total-text">Tổng cộng:</span>
+                        <span class="total-price"><c:out value="${order.totalAmount}" /></span>
+                    </div>
+                </div>
+            </c:forEach>
 
-                    <div class="order-list-item">
-                        <div class="order-details">
-                            <img src="https://via.placeholder.com/70" alt="Noodles" class="order-image">
-                            <div>
-                                <h3 class="item-title">Spicy seasoned seafood noodles</h3>
-                                <p class="item-qty-price">2 x 129.000 đ</p>
-                            </div>
-                        </div>
-                        <p class="order-message">This is the message</p>
-                    </div>
 
-                    <div class="order-list-item">
-                        <div class="order-details">
-                            <img src="https://via.placeholder.com/70" alt="Noodles" class="order-image">
-                            <div>
-                                <h3 class="item-title">Spicy seasoned seafood noodles</h3>
-                                <p class="item-qty-price">2 x 129.000 đ</p>
-                            </div>
-                        </div>
-                        <p class="order-message">This is the message</p>
-                    </div>
-                </div>
-                <hr class="divider">
-                <div class="order-total">
-                    <span class="total-text">Tổng cộng:</span>
-                    <span class="total-price">396.000 đ</span>
-                </div>
-            </div>
         </div>
     </div>
     <jsp:include page="/component/footer.jsp"/>

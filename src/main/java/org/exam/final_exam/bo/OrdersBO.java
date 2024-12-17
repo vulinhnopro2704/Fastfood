@@ -18,6 +18,9 @@ public class OrdersBO {
         return  ordersDAO.getAllOrders();
     }
 
+    public List<Orders> getAllOrdersByUserId(int userId){
+        return  ordersDAO.getAllOrdersByUserId(userId);
+    }
     public Orders getOrdersByUserId(int userId){
         return ordersDAO.getOrdersByUserId(userId);
     }

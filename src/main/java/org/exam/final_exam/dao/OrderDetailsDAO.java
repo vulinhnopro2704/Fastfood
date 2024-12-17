@@ -49,11 +49,12 @@ public class OrderDetailsDAO {
     }
 
     public List<foodOrderDetails> getFoodOrderDetailsByOrderId(int orderId) {
-        String sql = "SELECT od.id,od.quantity,od.subtotal,od.message, f.name ,f.price,f.imageLink\n" +
+        String sql = "SELECT od.id,od.orderid,od.quantity,od.subtotal,od.message, f.name ,f.price,f.imageLink\n" +
                 "FROM orderdetails od INNER JOIN foods f ON od.foodid = f.id\n" +
                 "where od.orderid = ?;";
         return genericDAO.executeQuery(sql, rs -> foodOrderDetails.builder()
                 .orderDetailId(rs.getInt("id"))
+                .orderId(rs.getInt("orderId"))
                 .quantity(rs.getInt("quantity"))
                 .subtotal(rs.getDouble("subtotal"))
                 .message(rs.getString("message"))

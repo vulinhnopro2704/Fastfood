@@ -21,6 +21,19 @@ public class FoodsDAO {
                 .build());
     }
 
+    public List<Foods> getAllFoodsBySearch(String search) {
+        String sql = "SELECT * FROM foods where name like ?";
+        return genericDAO.executeQuery(sql, rs -> Foods.builder()
+                .id(rs.getInt("id"))
+                .name(rs.getString("name"))
+                .description(rs.getString("description"))
+                .price(rs.getDouble("price"))
+                .imageLink(rs.getString("imageLink"))
+                .categoryId(rs.getInt("categoryId"))
+                .createAt(rs.getDate("createdat"))
+                .build(), search);
+    }
+
     public Foods getFoodById(int id) {
         String sql = "SELECT * FROM foods WHERE id = ?";
         return genericDAO.find(sql, rs -> Foods.builder()

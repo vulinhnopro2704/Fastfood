@@ -31,11 +31,13 @@
             </div>
 
             <!-- Search bar -->
+            <form action="/final_exam_war_exploded/timKiem" method="post">
             <div class="search_container">
-                <input type="text" placeholder="Tìm kiếm...">
+
+                <input type="text" placeholder="Tìm kiếm..." name="search" >
                 <button><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
-
+            </form>
             <div>
                 <button class="btn cart-toggle">
                     <i class="fa-solid fa-cart-shopping"></i>
