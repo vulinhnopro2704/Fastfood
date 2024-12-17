@@ -15,6 +15,10 @@ public class FoodsBO {
         return foodsDAO.getAllFoods();
     }
 
+    public List<Foods> getAllFoodsBySearch(String search){
+        return foodsDAO.getAllFoodsBySearch("%" + search + "%");
+    }
+
     public Foods getFoodById(int id){
         return foodsDAO.getFoodById(id);
     }

@@ -14,6 +14,7 @@ public class foodOrderDetails {
 
     // orderdetail
     private int orderDetailId;
+    private int orderId;
     private int quantity;
     private double subtotal;
     private String message;
