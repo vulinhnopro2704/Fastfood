@@ -134,10 +134,10 @@
         </c:forEach>
     </div>
 
-    <form id="orderForm" action="/final_exam_war_exploded/Order" method="post" enctype="multipart/form-data">
-    <div class="cart-footer">
-        <button class="btn" type="submit" >Order</button>
-    </div>
+    <form id="orderForm" action="<c:url value="/checkout" />" method="get">
+        <div class="cart-footer">
+            <button class="btn" type="submit" >Order</button>
+        </div>
     </form>
 </div>
 
@@ -165,6 +165,7 @@
         button.classList.add('selected');
     }
 </script>
+<script defer src="<c:url value="/js/select-custom.js" />"></script>
 
 <jsp:include page="/component/footer.jsp"/>
 </body>
