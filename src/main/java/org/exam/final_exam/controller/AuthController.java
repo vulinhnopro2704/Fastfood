@@ -46,6 +46,11 @@ public class AuthController extends HttpServlet {
             case "/auth/signup":
                 request.getRequestDispatcher("/jsp/auth/sign-up.jsp").forward(request, response);
                 break;
+            case "/auth/logout":
+                HttpSession session = request.getSession();
+                session.invalidate();
+                response.sendRedirect(request.getContextPath() + "/auth/login");
+                break;
             default:
                 break;
         }

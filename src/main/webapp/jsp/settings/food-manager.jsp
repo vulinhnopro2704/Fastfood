@@ -17,7 +17,7 @@
 <body>
     <div class="settings">
         <jsp:include page="/jsp/components/side-bar.jsp" />
-        <div class="sidebar">
+        <div class="sidebar-food-manager">
             <ul>
                 <li><a href="#" class="active">Quản lý món ăn</a></li>
                 <li><a href="#">Security</a></li>

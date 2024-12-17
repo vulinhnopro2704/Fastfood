@@ -4,32 +4,32 @@
 	min-height: 100vh;
 }
 
-.settings .sidebar {
-	width: 20%;
+.settings .sidebar-food-manager {
+	width: 15%;
 	background-color: var(--color-primary);
-	padding: 20px;
+	padding: 10px;
 }
 
-.sidebar ul {
+.sidebar-food-manager ul {
 	list-style: none;
 }
 
-.sidebar ul li {
+.sidebar-food-manager ul li {
 	margin-bottom: 20px;
 }
 
-.sidebar ul li a {
+.sidebar-food-manager ul li a {
 	text-decoration: none;
 	color: var(--color-quaternary);
 	display: flex;
 	align-items: center;
 }
 
-.sidebar ul li a.active {
+.sidebar-food-manager ul li a.active {
 	color: var(--text-color);
 }
 
-.sidebar ul li a span {
+.sidebar-food-manager ul li a span {
 	margin-left: 10px;
 }
 
@@ -93,7 +93,7 @@
 
 .menu-item button:hover {
 	background-color: var(--color-accent2);
-	translate: translateY(-5px);
+	transform: translateY(-5px);
 	box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
 }
 

@@ -20,11 +20,9 @@
         </a>
     </div>
     <div class="sidebar-item">
-        <form action="<c:url value="/auth/logout" />" method="post">
-            <a class="sidebar-link">
-                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                <span>Logout</span>
-            </a>
-        </form>
+        <a href="<c:url value="/auth/logout" />" class="sidebar-link">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span>Logout</span>
+        </a>
     </div>
 </div>
