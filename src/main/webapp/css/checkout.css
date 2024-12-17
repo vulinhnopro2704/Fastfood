@@ -1,0 +1,164 @@
+.container {
+	max-width: 1080px;
+	margin: 0 auto;
+	padding: 60px 0 30px 0;
+}
+
+.container > h1 {
+	margin-bottom: 20px;
+}
+
+#back-button {
+	color: white;
+	font-size: 18px;
+	padding: 10px 20px;
+	cursor: pointer;
+	position: fixed;
+	top: 15px;
+	left: 20px;
+	text-decoration: none;
+}
+
+.devider {
+	border-bottom: 2px solid var(--color-quaternary);
+	margin: 25px 0;
+	opacity: 0.5;
+}
+
+.cart-container {
+	display: flex;
+	justify-content: space-between;
+	gap: 20px;
+}
+
+.cart-items {
+	flex: 2;
+}
+
+.cart-item-wrap {
+	background-color: var(--color-secondary);
+	padding: 10px;
+	margin-bottom: 15px;
+	border-radius: 8px;
+}
+
+.cart-item-wrap input{
+	width: 100%;
+	display: block;
+	padding: 5px 10px;
+}
+
+.cart-item {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.item-image {
+	width: 80px;
+	height: 80px;
+	border-radius: 8px;
+	margin-right: 15px;
+	object-fit: cover;
+}
+
+.item-details {
+	flex: 2;
+}
+
+.item-details h3 {
+	font-size: 16px;
+	font-weight: 500;
+	max-width: 500px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.quantity-control {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	margin: 10px 0;
+}
+
+.quantity {
+	font-weight: 500;
+	font-size: 16px;
+}
+
+.btn {
+	background-color: var(--bg-color);
+	color: white;
+	border: none;
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+.item-total {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.item-total span {
+	font-weight: bold;
+	color: var(--color-quinary);
+}
+
+.order-summary {
+	flex: 1;
+	background-color: var(--color-secondary);
+	border-radius: 8px;
+	padding: 20px;
+	position: sticky;
+	top: 20px;
+}
+
+.order-summary-note {
+	font-size: 14px;
+	color: var(--color-quaternary);
+	margin-bottom: 10px;
+	line-height: 1.6;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.order-summary h2 {
+	margin-bottom: 10px;
+}
+
+.order-summary ul {
+	list-style: none;
+	margin-bottom: 20px;
+}
+
+.order-summary li {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 10px;
+}
+
+.total-price {
+	font-weight: bold;
+	font-size: 20px;
+	color: var(--highlight-bg);
+	text-align: right;
+}
+
+.order-btn {
+	width: 100%;
+	font-size: 16px;
+	font-weight: bold;
+	background-color: var(--color-accent1);
+	color: white;
+	padding: 10px 0;
+	transition: all 0.3s ease;
+}
+
+.order-btn:hover {
+	background-color: var(--color-accent2);
+	box-shadow: 0 4px 15px var(--color-accent1);
+	transform: translateY(-2px);
+}
