@@ -1,7 +1,5 @@
 package org.exam.final_exam.controller;
 
-
-import com.oracle.wls.shaded.org.apache.xpath.operations.Bool;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,7 +14,6 @@ import org.exam.final_exam.entity.Foods;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
