@@ -64,8 +64,10 @@
                             </div>
                             <div class="item-total">
                                 <span><c:out value="${food.subtotal}" /> đ</span>
-
-                                <button class="btn remove">X</button>
+                            <form action="<c:url value="/removeFood" />" method="post">
+                                <input type="text" name="orderType" id="orderDetailId"  value="${food.orderDetailId}" hidden="hidden">
+                                <button type="submit" class="btn remove">X</button>
+                            </form>
                             </div>
                         </div>
                         <div>
@@ -100,6 +102,7 @@
                 </ul>
                 <div class="devider"></div>
                 <form action="<c:url value="/confirmOrder" />" method="get">
+                    <input type="text" name="orderType" id="orderType" hidden="hidden" value="${orders.type}">
                     <button type="submit" class="btn order-btn">Đặt hàng <span class="order-total"></span></button>
                 </form>
 
@@ -107,6 +110,17 @@
         </div>
     </div>
 <%--    <script src="<c:url value="/js/checkout.js" />"></script>--%>
+    <script>
+
+        // Lấy phần tử input bằng ID
+        const orderTypeInput = document.getElementById("orderType");
+
+        function handlClick(element) {
+            const value = element.getAttribute("data-value");
+            console.log("Hàm handlClick được gọi! : ", value );
+            orderTypeInput.value = value;
+        }
+    </script>
     <script defer src="<c:url value="/js/select-custom.js" />"></script>
 </body>
 
