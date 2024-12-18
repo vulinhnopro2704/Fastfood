@@ -49,6 +49,10 @@ public class OrdersBO {
     public int updateTotalAmount(int id, double amount){
         return ordersDAO.updateTotalAmount(id, amount);
     }
+
+    public int updateTotalAmountDelete(int id, double amount){
+        return ordersDAO.updateTotalAmountDelete(id, amount);
+    }
     public int deleteOrder(int id){
         return ordersDAO.deleteOrder(id);
     }

@@ -90,6 +90,12 @@ public class OrdersDAO {
         return genericDAO.executeUpdate(sql, totalAmount, idOrder);
 
     }
+
+    public int updateTotalAmountDelete(int idOrder, double totalAmount) {
+        String sql = "UPDATE orders SET totalAmount = totalAmount - ? WHERE id = ?";
+        return genericDAO.executeUpdate(sql, totalAmount, idOrder);
+
+    }
     public int deleteOrder(int id) {
         String sql = "DELETE FROM orders WHERE id = ?";
         return genericDAO.executeUpdate(sql, id);

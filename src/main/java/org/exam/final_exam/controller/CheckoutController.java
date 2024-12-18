@@ -96,15 +96,6 @@ public class CheckoutController extends HttpServlet {
             return;
         }
         switch (path){
-            case "/removeFood":
-                System.out.println("removeFood : " + request.getParameter("orderDetailId"));
-                int idorderdetail = Integer.parseInt(request.getParameter("orderDetailId"));
-                int delete = orderDetailsBO.deleteOrderDetails(idorderdetail);
-                if(delete>0){
-                    System.out.println("delete orderdetail");
-                }
-                response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/checkout"));
-                break;
             case "/checkout":
                 System.out.println("checkout");
 //                System.out.println("type : " + request.getParameter("typeOrder"));
@@ -120,8 +111,10 @@ public class CheckoutController extends HttpServlet {
                     // Parse request để lấy danh sách các FileItem
                     List<FileItem> formItems = upload.parseRequest(request);
                     double total = 0;
+                    int quanntity = 0;
                     OrderDetails orderDetails = new OrderDetails();
                     // cap nhap message cua orderDetail
+
                     for (FileItem item : formItems) {
                         if (item.isFormField()) {
                             // Nếu là trường form thông thường
@@ -133,19 +126,20 @@ public class CheckoutController extends HttpServlet {
                                     int idOrderdt = Integer.parseInt(fieldValue);
                                     orderDetails = orderDetailsBO.getOrderDetails(idOrderdt);
                                     break;
-                                case "subtotal":
-                                    total += Double.parseDouble(fieldValue);
+                                case "quantity":
+//                                    System.out.println("quantity : " + fieldValue + " id : " + orderDetails.getId());
+                                    quanntity = Integer.parseInt(fieldValue);
+                                    int udquan = orderDetailsBO.updateQuantityNumber(orderDetails.getId(),Integer.parseInt(fieldValue));
+                                    break;
+                                case "price":
+//                                    System.out.println("price : " + fieldValue);
+                                    total += (Double.parseDouble(fieldValue)*quanntity);
+                                    System.out.println("price  : " + fieldValue+ " quantity : " + quanntity+ "= total" + total);
                                     break;
                                 case "message":
                                     // update message orderDetail
                                     int update = orderDetailsBO.updateMessage(orderDetails.getId(), fieldValue);
                                     break;
-                                case "quantity":
-                                    System.out.println("quantity : " + fieldValue + " id : " + orderDetails.getId());
-                                    int udquan = orderDetailsBO.updateQuantityNumber(orderDetails.getId(),Integer.parseInt(fieldValue));
-                                    if(udquan>0){
-                                        System.out.println("update quantity");
-                                    }
                                 case "typeOrder":
                                     // update type order
                                     ordersBO.updateOrderType(idOrder,fieldValue);
@@ -169,7 +163,20 @@ public class CheckoutController extends HttpServlet {
                     response.getWriter().println("Error: " + ex.getMessage());
                 }
 
+                break;
+            case "/removeFood":
+                System.out.println("removeFood : " + request.getParameter("orderDetailId"));
+                int idorderdetail = Integer.parseInt(request.getParameter("orderDetailId"));
 
+                OrderDetails orderDetails = orderDetailsBO.getOrderDetails(idorderdetail);
+                ordersBO.updateTotalAmountDelete(idOrder,orderDetails.getSubtotal());
+                int delete = orderDetailsBO.deleteOrderDetails(idorderdetail);
+
+
+                if(delete>0){
+                    System.out.println("delete orderdetail");
+                }
+                response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/checkout"));
                 break;
             default :
                 break;
