@@ -5,6 +5,7 @@
       <map>
         <entry key="file://$PROJECT_DIR$/src/main/webapp/index.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/jsp/components/card.jsp" value="file://$PROJECT_DIR$/src/main/webapp/jsp/components" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/jsp/index.jsp" value="file://$PROJECT_DIR$/src/main/webapp/jsp" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/jsp/vacxin/list.jsp" value="file://$PROJECT_DIR$/src/main/webapp/jsp/vacxin" />
       </map>
     </option>

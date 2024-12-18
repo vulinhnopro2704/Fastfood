@@ -1,6 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ page import="java.util.ArrayList, org.exam.final_exam.entity.foodOrderDetails" %>
+<%@ page import="java.util.ArrayList, org.exam.final_exam.entity.Orders" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,49 +27,53 @@
             <!-- Cart Items -->
             <div class="cart-items">
                 <!-- Item 1 -->
-                <div class="cart-item-wrap">
-                    <div class="cart-item">
-                        <img src="<c:url value="/assets/default/food.jpeg" />" alt="Hamburger" class="item-image">
-                        <div class="item-details">
-                            <h3>Hamburger</h3>
-                            <div class="quantity-control">
-                                <button class="btn decrement">-</button>
-                                <span class="quantity">2</span>
-                                <button class="btn increment">+</button>
+<%--                <div class="cart-item-wrap">--%>
+<%--                    <div class="cart-item">--%>
+<%--                        <img src="<c:url value="/assets/default/food.jpeg" />" alt="Hamburger" class="item-image">--%>
+<%--                        <div class="item-details">--%>
+<%--                            <h3>Hamburger</h3>--%>
+<%--                            <div class="quantity-control">--%>
+<%--                                <button class="btn decrement">-</button>--%>
+<%--                                <span class="quantity">2</span>--%>
+<%--                                <button class="btn increment">+</button>--%>
+<%--                            </div>--%>
+<%--                            <p class="item-price">40.000 đ</p>--%>
+<%--                        </div>--%>
+<%--                        <div class="item-total">--%>
+<%--                            <span></span>--%>
+<%--                            <button class="btn remove">X</button>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                    <div>--%>
+<%--                        <input type="text" placeholder="Ghi chú" name="message" value="Đây là message đi kèm">--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+
+                <c:forEach var="food" items="${listFoodOrderDetails}">
+                    <div class="cart-item-wrap">
+                        <div class="cart-item">
+                            <img src="<c:url value="${food.imageLink}" />" alt="Hamburger" class="item-image">
+                            <div class="item-details">
+                                <h3><c:out value="${food.name}" /></h3>
+                                <div class="quantity-control">
+                                    <button class="btn decrement">-</button>
+                                    <span class="quantity"><c:out value="${food.quantity}" /></span>
+                                    <button class="btn increment">+</button>
+                                </div>
+                                <p class="item-price"><c:out value="${food.price}" /> đ</p>
                             </div>
-                            <p class="item-price">40.000 đ</p>
-                        </div>
-                        <div class="item-total">
-                            <span></span>
-                            <button class="btn remove">X</button>
-                        </div>
-                    </div>
-                    <div>
-                        <input type="text" placeholder="Ghi chú" name="message" value="Đây là message đi kèm">
-                    </div>
-                </div>
-                <!-- Repeat for other items -->
-                <div class="cart-item-wrap">
-                    <div class="cart-item">
-                        <img src="<c:url value="/assets/default/food.jpeg" />" alt="Hamburger" class="item-image">
-                        <div class="item-details">
-                            <h3>Hamburger</h3>
-                            <div class="quantity-control">
-                                <button class="btn decrement">-</button>
-                                <span class="quantity">2</span>
-                                <button class="btn increment">+</button>
+                            <div class="item-total">
+                                <span><c:out value="${food.subtotal}" /> đ</span>
+
+                                <button class="btn remove">X</button>
                             </div>
-                            <p class="item-price">40.000 đ</p>
                         </div>
-                        <div class="item-total">
-                            <span></span>
-                            <button class="btn remove">X</button>
+                        <div>
+                            <input type="text" placeholder="Ghi chú" name="message" value="<c:url value="${food.message}" />" disabled>
                         </div>
                     </div>
-                    <div>
-                        <input type="text" placeholder="Ghi chú" name="message" value="Đây là message đi kèm">
-                    </div>
-                </div>
+                </c:forEach>
+
             </div>
 
             <!-- Order Summary -->
@@ -82,21 +89,24 @@
                     </div>
                 </div>
                 <jsp:include page="/jsp/components/select-custom.jsp">
-                    <jsp:param name="selectedOption" value="Giao hàng tận nơi" />
-                    <jsp:param name="items" value="Giao hàng tận nơi,Tại quán,Mang về" />
+                    <jsp:param name="selectedOption" value="${orders.type}" />
+                    <jsp:param name="items" value="DENEIN,SHIP,TAKEAWAY" />
                 </jsp:include>
                 <div class="devider"></div>
                 <ul class="order-summary-list">
-                    <li>Tổng cộng: <span id="number-of-food"></span></li>
-                    <li>Tổng đơn hàng: <span class="order-total"></span></li>
+                    <li>Tổng cộng:  <span ><c:out value="${listFoodOrderDetails.size()}" /> món</span></li>
+                    <li>Tổng đơn hàng:   <span ><c:out value="${orders.totalAmount}" /> đ</span></li>
                     <li>Phí giao hàng: <span>0 đ</span></li>
                 </ul>
                 <div class="devider"></div>
-                <button class="btn order-btn">Đặt hàng <span class="order-total"></span></button>
+                <form action="<c:url value="/confirmOrder" />" method="get">
+                    <button type="submit" class="btn order-btn">Đặt hàng <span class="order-total"></span></button>
+                </form>
+
             </div>
         </div>
     </div>
-    <script src="<c:url value="/js/checkout.js" />"></script>
+<%--    <script src="<c:url value="/js/checkout.js" />"></script>--%>
     <script defer src="<c:url value="/js/select-custom.js" />"></script>
 </body>
 

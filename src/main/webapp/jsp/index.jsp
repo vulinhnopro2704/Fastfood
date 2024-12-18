@@ -94,13 +94,13 @@
 <div class="cart-container" id="cart">
     <div class="cart-header">Giỏ hàng của bạn</div>
     <div class="cart-type">
-        <button class="btn cart-type-button" onclick="selectOption(this)">
+        <button class="btn cart-type-button" onclick="selectOption(this)" value="DINEIN">
             Tại quán
         </button>
-        <button class="btn cart-type-button" onclick="selectOption(this)">
+        <button class="btn cart-type-button" onclick="selectOption(this)" value="TAKEAWAY">
             Mang về
         </button>
-        <button class="btn cart-type-button" onclick="selectOption(this)">
+        <button class="btn cart-type-button" onclick="selectOption(this)" value="SHIP">
             Ship
         </button>
     </div>
@@ -136,7 +136,8 @@
         </c:forEach>
     </div>
 
-    <form id="orderForm" action="<c:url value="/checkout" />" method="get">
+    <form id="orderForm" action="<c:url value="/checkout" />" method="post" enctype="multipart/form-data">
+        <input type="text" hidden="hidden" value="TAKEAWAY" name="typeOrder" id="typeOrder">
         <div class="cart-footer">
             <button class="btn" type="submit" >Order</button>
         </div>
@@ -146,7 +147,7 @@
 <script>
     const cartToggle = document.querySelector('.cart-toggle');
     const cart = document.querySelector('#cart');
-
+    const typeOrder = document.querySelector('#typeOrder');
     cartToggle.addEventListener('click', () => {
         cart.classList.toggle('active');
     });
@@ -165,6 +166,8 @@
 
         // Add 'selected' class to the clicked button
         button.classList.add('selected');
+
+        document.getElementById('typeOrder').value = button.value;
     }
 </script>
 <script defer src="<c:url value="/js/select-custom.js" />"></script>

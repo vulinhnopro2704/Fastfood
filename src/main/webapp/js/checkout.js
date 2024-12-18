@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
             orderTotal.innerText = `${total} đ`;
         });
 
-        updateNumberOfFood();
+        // updateNumberOfFood();
     }
 
     cartItems.forEach(item => {
@@ -36,18 +36,18 @@ document.addEventListener("DOMContentLoaded", () => {
         incrementBtn.addEventListener("click", () => {
             let quantity = parseInt(quantityEl.innerText);
             quantityEl.innerText = quantity + 1;
-            updateOrderTotal();
+            // updateOrderTotal();
         });
 
         decrementBtn.addEventListener("click", () => {
             let quantity = parseInt(quantityEl.innerText);
             if (quantity > 1) {
                 quantityEl.innerText = quantity - 1;
-                updateOrderTotal();
+                // updateOrderTotal();
             }
         });
     });
 
-    updateOrderTotal();
-    updateNumberOfFood();
+    // updateOrderTotal();
+    // updateNumberOfFood();
 });

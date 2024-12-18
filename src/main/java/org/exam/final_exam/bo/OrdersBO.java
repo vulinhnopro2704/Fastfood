@@ -40,6 +40,15 @@ public class OrdersBO {
         return  ordersDAO.updateOrder(orders);
     }
 
+    public int updateOrderStatus(int id, int status){
+        return ordersDAO.updaeOrderStatus(id, status);
+    }
+    public int updateOrderType(int id, String type){
+        return ordersDAO.updateOderType(id, type);
+    }
+    public int updateTotalAmount(int id, double amount){
+        return ordersDAO.updateTotalAmount(id, amount);
+    }
     public int deleteOrder(int id){
         return ordersDAO.deleteOrder(id);
     }

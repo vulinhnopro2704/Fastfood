@@ -10,7 +10,8 @@
         </div>
 
         <div class="cart-item-qty">
-            <input type="number" value="${param.itemQty}" min="1">
+            <input type="hidden" name="idOrderdt" value="${param.idOrderDetail}" form="${param.idForm}"  >
+            <input type="number" name="quantity" value="${param.itemQty}" min="1"  form="${param.idForm}">
         </div>
         <div class="cart-item-total">
             ${param.itemTotal}
@@ -21,7 +22,8 @@
     </div>
     <div class="cart-item-bottom">
 
-        <input type="hidden" name="idOrderdt" value="${param.idOrderDetail}" form="${param.idForm}"  >
+<%--        <input type="hidden" name="idOrderdt" value="${param.idOrderDetail}" form="${param.idForm}"  >--%>
+        <input type="hidden" name="subtotal" value="${param.itemTotal}" form="${param.idForm}"  >
         <input type="text" placeholder="Ghi chú" name="message" value="${param.message}" form="${param.idForm}">
 
 <%--        <a href="/final_exam_war_exploded/TrangChu/OrderDetail/deleteFood?id=${param.idOrderDetail}" > <button class="btn">${param.buttonText}</button></a>--%>
