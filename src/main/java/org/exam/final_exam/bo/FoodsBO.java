@@ -27,8 +27,8 @@ public class FoodsBO {
         Foods food = new Foods(name, description, price, imageLink, categoryId);
         return foodsDAO.addFood(food);
     }
-    public int updateFood(Foods food){
-        return foodsDAO.updateFood(food);
+    public void updateFood(Foods food){
+        foodsDAO.updateFood(food);
     }
     public int deleteFood(int id){
         return foodsDAO.deleteFood(id);

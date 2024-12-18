@@ -1,4 +1,4 @@
-function showAddFood(id) {
+function showAddFood(food = {}) {
     const style = `
         <style>
             .overlay {
@@ -171,12 +171,13 @@ function showAddFood(id) {
     const html = `
         <div class="overlay" id="overlay">
             <div class="add-dish-container">
-                <h2>Thêm món ăn</h2>
-                <form id="add-dish-form" method="post" action="/final_exam_war_exploded/food" enctype="multipart/form-data">
+                <h2>${food.id ? 'Sửa món ăn' : 'Thêm món ăn'}</h2>
+                <form id="add-dish-form" method="post" action=${food.id ? "/final_exam_war_exploded/food/update" : "/final_exam_war_exploded/food"} enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="${food.id}">
                     <label for="input-file" id="drop-area">
                         <input type="file" id="input-file" name="image" accept="image/*" hidden>
-                        <div id="img-view">
-                            <img src="/final_exam_war_exploded/assets/default/upload.png" alt="Drag and drop here">
+                        <div id="img-view" style="background-image: url('${food.imageLink || '/final_exam_war_exploded/assets/default/upload.png'}');">
+                            ${!food.imageLink ? '<img src="/final_exam_war_exploded/assets/default/upload.png" alt="Drag and drop here">' : ''}
                             <p class="heading">Drag and drop or click here</p>
                             <p class="sub-heading">to upload image</p>
                         </div>
@@ -184,27 +185,27 @@ function showAddFood(id) {
                 
                     <div class="form-group">
                         <label for="dish-name">Tên món</label>
-                        <input type="text" id="dish-name" name="name" placeholder="Nhập tên món">
+                        <input type="text" id="dish-name" name="name" placeholder="Nhập tên món" value="${food.name || ''}">
                     </div>
                 
                     <div class="form-group">
                         <label for="dish-category">Phân loại</label>
                         <select id="dish-category" name="categoryId">
-                            <option value="1">Noodle</option>
-                            <option value="2">Rice</option>
-                            <option value="3">Dessert</option>
-                            <option value="4">Beverage</option>
+                            <option value="1" ${food.categoryId === 1 ? 'selected' : ''}>Noodle</option>
+                            <option value="2" ${food.categoryId === 2 ? 'selected' : ''}>Rice</option>
+                            <option value="3" ${food.categoryId === 3 ? 'selected' : ''}>Dessert</option>
+                            <option value="4" ${food.categoryId === 4 ? 'selected' : ''}>Beverage</option>
                         </select>
                     </div>
                 
                     <div class="form-group">
                         <label for="dish-price">Giá</label>
-                        <input type="number" id="dish-price" name="price" placeholder="Nhập giá món">
+                        <input type="number" id="dish-price" name="price" placeholder="Nhập giá món" value="${food.price || ''}">
                     </div>
                 
                     <div class="form-group">
                         <label for="dish-description">Mô tả</label>
-                        <textarea id="dish-description" name="description" placeholder="Nhập mô tả món"></textarea>
+                        <textarea id="dish-description" name="description" placeholder="Nhập mô tả món">${food.description || ''}</textarea>
                     </div>
                 
                     <div class="form-actions">
@@ -223,6 +224,7 @@ function showAddFood(id) {
     const inputFile = document.getElementById('input-file');
     const imgView = document.getElementById('img-view');
     const closePopupButton = document.getElementById('close-popup');
+    const form = document.getElementById('add-dish-form');
 
     dropArea.addEventListener('dragover', (e) => {
         e.preventDefault();
@@ -251,5 +253,46 @@ function showAddFood(id) {
 
     closePopupButton.addEventListener('click', () => {
         overlay.remove();
+    });
+
+    // Validation logic
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const name = form.querySelector('#dish-name').value.trim();
+        const categoryId = form.querySelector('#dish-category').value;
+        const price = form.querySelector('#dish-price').value.trim();
+        const description = form.querySelector('#dish-description').value.trim();
+        const image = inputFile.files[0];
+
+        let isValid = true;
+        let errorMessage = '';
+
+        if (!name) {
+            isValid = false;
+            errorMessage += 'Tên món không được để trống.\n';
+        }
+        if (!categoryId) {
+            isValid = false;
+            errorMessage += 'Vui lòng chọn phân loại.\n';
+        }
+        if (!price || isNaN(price) || price <= 0) {
+            isValid = false;
+            errorMessage += 'Giá phải là số dương.\n';
+        }
+        if (!description) {
+            isValid = false;
+            errorMessage += 'Mô tả không được để trống.\n';
+        }
+        if (!image && !food.image) {
+            isValid = false;
+            errorMessage += 'Vui lòng tải lên hình ảnh.\n';
+        }
+
+        if (!isValid) {
+            alert(errorMessage);
+        } else {
+            form.submit(); // Submit form nếu tất cả đều hợp lệ
+        }
     });
 }

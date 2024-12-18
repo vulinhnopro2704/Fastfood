@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-@WebServlet(name = "OrderController", urlPatterns = {"/order","/Order"})
+@WebServlet(name = "OrderController", urlPatterns = {"/order","/Order", "/order/update-status"})
 public class OrderController extends HttpServlet {
 
     private final OrdersBO ordersBO ;
@@ -127,6 +127,15 @@ public class OrderController extends HttpServlet {
                     response.getWriter().println("Error: " + ex.getMessage());
                 }
                 break;
+            case "/order/update-status":
+                int orderId = Integer.parseInt(request.getParameter("orderId"));
+                String newStatus = request.getParameter("newStatus");
+
+                System.out.println("orderId: " + orderId);
+                System.out.println("newStatus: " + newStatus);
+                // Update the order status in the database
+                ordersBO.updateOrderStatus(orderId, newStatus);
+                response.setStatus(HttpServletResponse.SC_OK);
             default :
                 break;
         }

@@ -31,7 +31,7 @@
                 <div class="add-new">+ Add new dish</div>
 
                 <c:forEach var="food" items="${listFoods}">
-                    <div class="menu-item">
+                    <div class="menu-item" data-food-id="${food.id}">
                         <i class="fa-solid fa-x menu-item-exit"></i>
                         <img src="<c:url value="${food.imageLink}" />" alt="${food.description}">
                         <h3><c:out value="${food.name}" /></h3>
@@ -39,23 +39,32 @@
                         <button>Sửa món ăn</button>
                     </div>
                 </c:forEach>
-
-                <div class="menu-item">
-                    <i class="fa-solid fa-x menu-item-exit"></i>
-                    <img src="<c:url value="/assets/images/pasta.png" />" alt="Spicy seasoned seafood noodles">
-                    <h3>Spicy seasoned seafood noodles</h3>
-                    <p>230.000 đ</p>
-                    <button>Sửa món ăn</button>
-                </div>
-
             </div>
         </div>
     </div>
     <script src="<c:url value="/js/show-add-popup.js" />"></script>
     <script>
-        const addNew = document.querySelector('.add-new');
-        addNew.addEventListener('click', () => {
-            showAddFood();
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.menu-item button').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const foodId = event.target.closest('.menu-item').getAttribute('data-food-id');
+                    console.log('foodId:', foodId);
+                    fetch(`/final_exam_war_exploded/food?id=` + foodId)
+                        .then(response => response.json())
+                        .then(data => {
+                            showAddFood({
+                                ...data,
+                                imageLink: '/final_exam_war_exploded/' + data.imageLink
+                            });
+                        })
+                        .catch(error => console.error('Error fetching food details:', error));
+                });
+            });
+
+            const addNew = document.querySelector('.add-new');
+            addNew.addEventListener('click', () => {
+                showAddFood();
+            });
         });
     </script>
     <jsp:include page="/component/footer.jsp" />

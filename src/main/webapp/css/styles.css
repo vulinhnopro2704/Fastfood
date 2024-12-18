@@ -43,6 +43,7 @@ body {
 	background-color: var(--color-primary);
 	color: #fff;
 	padding-bottom: 40px;
+	margin-left: 100px;
 }
 
 .footer {
