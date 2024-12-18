@@ -20,7 +20,9 @@
 
 <body>
 <div class="container">
-    <jsp:include page="/jsp/components/side-bar.jsp" />
+    <jsp:include page="/jsp/components/side-bar.jsp">
+        <jsp:param name="currentPage" value="home"/>
+    </jsp:include>
     <!-- Main content -->
     <div class="main-content">
         <!-- Header of Home page -->

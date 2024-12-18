@@ -30,7 +30,7 @@ public class OrdersBO {
     }
 
 
-    public int addOrder(int userId, long totalamount,int status,String type){
+    public int addOrder(int userId, long totalamount,String status,String type){
         Orders orders = new Orders(userId, totalamount, status, type);
 
         return  ordersDAO.addOrder(orders);

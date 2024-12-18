@@ -11,6 +11,7 @@ import org.exam.final_exam.bo.OrderDetailsBO;
 import org.exam.final_exam.bo.OrdersBO;
 import org.exam.final_exam.bo.UsersBO;
 import org.exam.final_exam.entity.*;
+import org.exam.final_exam.enums.Status;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -72,6 +73,7 @@ public class AuthController extends HttpServlet {
                    }
                    else{
                        HttpSession session = request.getSession();
+                       session.setAttribute("fullname", user.getFullName());
                        session.setAttribute("email", user.getEmail());
                        session.setAttribute("role", user.getRole());
                        session.setAttribute("id", user.getId());
@@ -91,7 +93,7 @@ public class AuthController extends HttpServlet {
                        // tim user signin
                        Users userSignin = usersBO.findUserSignIn(email,fullname,phone,address);
                        // tao moi order cho user signin
-                       int addNewOrder = ordersBO.addOrder(userSignin.getId(),0,0,"TAKEAWAY");
+                       int addNewOrder = ordersBO.addOrder(userSignin.getId(),0, Status.PENDING.name(),"TAKEAWAY");
                         if(addNewOrder > 0){
                             response.sendRedirect(request.getContextPath() + "/auth/login");
                         }

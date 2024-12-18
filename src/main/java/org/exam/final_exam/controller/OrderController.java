@@ -14,10 +14,12 @@ import org.exam.final_exam.bo.OrderDetailsBO;
 import org.exam.final_exam.bo.OrdersBO;
 import org.exam.final_exam.entity.Orders;
 import org.exam.final_exam.entity.foodOrderDetails;
+import org.exam.final_exam.enums.Status;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 @WebServlet(name = "OrderController", urlPatterns = {"/order","/Order"})
@@ -54,7 +56,18 @@ public class OrderController extends HttpServlet {
         switch (path) {
             case "/order":
                 // lay tat ca order cua user by id user
-                List<Orders> orders = ordersBO.getAllOrdersByUserId(id);
+                String role = session.getAttribute("role").toString();
+                List<Orders> orders = new ArrayList<>();
+                if (role.equalsIgnoreCase("USER")) {
+                    orders = ordersBO.getAllOrdersByUserId(id);
+                }
+                else if (role.equalsIgnoreCase("ADMIN")) {
+                    orders = ordersBO.getAllOrders();
+                }
+                else  {
+                    response.sendRedirect(request.getContextPath() + "/auth/login");
+                    return;
+                }
 
                 // lay tat ca orderdetail and food cua tung order
                 List<foodOrderDetails> listFoodOrderDetails = new ArrayList<>();
@@ -67,6 +80,10 @@ public class OrderController extends HttpServlet {
                 orders = orders.reversed();
                 request.setAttribute("orders", orders);
                 request.setAttribute("listFoodOrderDetails", listFoodOrderDetails);
+
+                // Set enum values as request attribute
+                HashMap<String, String> statusValues = Status.getValues();
+                request.setAttribute("statusValues", statusValues);
 
                 request.getRequestDispatcher("/jsp/order/order.jsp").forward(request, response);
                 break;

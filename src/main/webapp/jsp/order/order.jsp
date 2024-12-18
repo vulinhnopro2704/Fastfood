@@ -1,8 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ page import="java.util.ArrayList, org.exam.final_exam.entity.Orders" %>
-<%@ page import="java.util.ArrayList, org.exam.final_exam.entity.foodOrderDetails" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,14 +17,32 @@
 
 <body>
     <div class="container">
-        <jsp:include page="/jsp/components/side-bar.jsp" />
+        <jsp:include page="/jsp/components/side-bar.jsp">
+            <jsp:param name="currentPage" value="order"/>
+        </jsp:include>
         <div class="order-container">
             <!-- Order Item -->
             <c:forEach var="order" items="${orders}">
                 <div class="order-item">
                     <div class="order-header">
                         <span class="order-date"><c:out value="${order.orderDate}" /></span>
-                        <span class="order-status"><c:out value="${order.type}" /> <span class="status-delivered">Đã giao</span></span>
+                        <span class="order-status">
+                            <c:out value="${order.type}" />
+                            <span class="status-delivered">
+                            <c:choose>
+                                <c:when test="${sessionScope.role.equalsIgnoreCase('ADMIN')}">
+                                    <select name="status" class="status-select" data-order-id="${order.id}">
+                                        <c:forEach var="entry" items="${statusValues}">
+                                            <option value="${entry.key}" <c:if test="${entry.value == order.status}">selected</c:if>>${entry.value}</option>
+                                        </c:forEach>
+                                    </select>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:out value="${order.status}" /> <c:out value="${sessionScope.role}" />
+                                </c:otherwise>
+                            </c:choose>
+                        </span>
+                        </span>
                     </div>
                     <hr class="divider">
                     <div class="order-list">
@@ -34,7 +50,8 @@
                             <c:if test="${foodOrder.orderId == order.id}">
                                 <div class="order-list-item">
                                     <div class="order-details">
-                                        <img src="${foodOrder.imageLink}" alt="Noodles" class="order-image">
+
+                                        <img src="<c:url value="${foodOrder.imageLink}"/>" alt="Noodles" class="order-image">
                                         <div>
                                             <h3 class="item-title"><c:out value="${foodOrder.name}" /></h3>
                                             <p class="item-qty-price"><c:out value="${foodOrder.quantity}" />x<c:out value="${foodOrder.price}" /></p>
@@ -43,7 +60,6 @@
                                     <p class="order-message"><c:out value="${foodOrder.message}" /></p>
                                 </div>
                             </c:if>
-
                         </c:forEach>
 
 

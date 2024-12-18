@@ -15,6 +15,7 @@ import org.exam.final_exam.bo.OrdersBO;
 import org.exam.final_exam.entity.OrderDetails;
 import org.exam.final_exam.entity.Orders;
 import org.exam.final_exam.entity.foodOrderDetails;
+import org.exam.final_exam.enums.Status;
 
 import java.io.IOException;
 import java.util.List;
@@ -65,7 +66,7 @@ public class CheckoutController extends HttpServlet {
                 // uodate status order = 1, updatedate -> đơn hàng đã được đặt
                 ordersBO.updateOrderStatus(idOrder,1);
                 // tao moi order cho user
-                 ordersBO.addOrder(id,0,0,"TAKEAWAY");
+                 ordersBO.addOrder(id,0, Status.PENDING.name(), "TAKEAWAY");
                  // set session orderid cho user
                 session.setAttribute("orderId", ordersBO.getOrdersByUserId(id).getId());
                 response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/order"));
