@@ -12,7 +12,7 @@ public class OrdersDAO {
     }
 
     public List<Orders> getAllOrders() {
-        String sql = "SELECT * FROM orders";
+        String sql = "SELECT * FROM orders order by orderDate desc";
         return genericDAO.executeQuery(sql, rs -> Orders.builder()
                 .id(rs.getInt("id"))
                 .userId(rs.getInt("userId"))
@@ -24,7 +24,7 @@ public class OrdersDAO {
                 .build());
     }
     public List<Orders> getAllOrdersByUserId(int userId) {
-        String sql = "SELECT * FROM orders where userId = ?";
+        String sql = "SELECT * FROM orders where userId = ? order by orderDate desc";
         return genericDAO.executeQuery(sql, rs -> Orders.builder()
                 .id(rs.getInt("id"))
                 .userId(rs.getInt("userId"))
@@ -73,7 +73,7 @@ public class OrdersDAO {
         return genericDAO.executeUpdate(sql, order.getUserId(), order.getOrderDate(), order.getTotalAmount(), order.getStatus(),order.getType(), order.getId());
     }
 
-    public int updaeOrderStatus(int id, int status) {
+    public int updateOrderStatus(int id, String status) {
         String sql = "UPDATE orders SET status = ?,orderDate = ? WHERE id = ?";
         long currentTimeMillis = System.currentTimeMillis();
         java.sql.Date sqlDate = new java.sql.Date(currentTimeMillis);

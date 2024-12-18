@@ -40,8 +40,8 @@ public class OrdersBO {
         return  ordersDAO.updateOrder(orders);
     }
 
-    public int updateOrderStatus(int id, int status){
-        return ordersDAO.updaeOrderStatus(id, status);
+    public int updateOrderStatus(int id, String status){
+        return ordersDAO.updateOrderStatus(id, status);
     }
     public int updateOrderType(int id, String type){
         return ordersDAO.updateOderType(id, type);

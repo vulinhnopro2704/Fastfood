@@ -3,6 +3,23 @@
 	gap: 20px;
 }
 
+select {
+	background-color: var(--color-tertiary);
+	border: 1px solid var(--color-quaternary);
+	border-radius: 5px;
+	color: var(--color-quaternary);
+	padding: 10px;
+	margin-right: 10px;
+}
+
+option{
+	background-color: var(--color-tertiary);
+	border: 1px solid var(--color-quaternary);
+	border-radius: 5px;
+	color: var(--color-quaternary);
+	padding: 10px;
+}
+
 .order-container {
 	padding: 20px;
 	display: flex;

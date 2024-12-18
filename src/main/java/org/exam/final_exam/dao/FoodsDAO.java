@@ -52,9 +52,15 @@ public class FoodsDAO {
         return genericDAO.executeUpdate(sql, food.getName(), food.getDescription(), food.getPrice(), food.getImageLink(), food.getCategoryId(), food.getCreateAt());
     }
 
-    public int updateFood(Foods food) {
+    public void updateFood(Foods food) {
         String sql = "UPDATE foods SET name = ?, description = ?, price = ?, imageLink = ?, categoryId = ? WHERE id = ?";
-        return genericDAO.executeUpdate(sql, food.getName(), food.getDescription(), food.getPrice(), food.getImageLink(), food.getCategoryId(), food.getId());
+        System.out.println(food.getId());
+        System.out.println(food.getName());
+        System.out.println(food.getDescription());
+        System.out.println(food.getPrice());
+        System.out.println(food.getImageLink());
+        System.out.println(food.getCategoryId());
+        genericDAO.executeUpdate(sql, food.getName(), food.getDescription(), food.getPrice(), food.getImageLink(), food.getCategoryId(), food.getId());
     }
 
     public int deleteFood(int id) {

@@ -40,11 +40,13 @@
                 <button><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
             </form>
-            <div>
-                <button class="btn cart-toggle">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                </button>
-            </div>
+            <c:if test="${sessionScope.role.equalsIgnoreCase('USER')}">
+                <div>
+                    <button class="btn cart-toggle">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </button>
+                </div>
+            </c:if>
         </header>
 
         <!-- Body content -->
@@ -106,7 +108,6 @@
             Ship
         </button>
     </div>
-
     <div class="cart-items">
         <c:forEach var="foodorderDetail" items="${listFoodOrderDetails}">
             <c:set var="imageLink" value="${foodorderDetail.imageLink}" />

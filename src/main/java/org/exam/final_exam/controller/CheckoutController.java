@@ -64,7 +64,7 @@ public class CheckoutController extends HttpServlet {
 
             case "/confirmOrder":
                 // uodate status order = 1, updatedate -> đơn hàng đã được đặt
-                ordersBO.updateOrderStatus(idOrder,1);
+                ordersBO.updateOrderStatus(idOrder, Status.PROCESSING.name());
                 // tao moi order cho user
                  ordersBO.addOrder(id,0, Status.PENDING.name(), "TAKEAWAY");
                  // set session orderid cho user

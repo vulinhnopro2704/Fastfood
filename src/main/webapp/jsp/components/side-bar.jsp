@@ -14,12 +14,14 @@
                 <span>Đơn hàng</span>
             </a>
         </div>
-        <div class="sidebar-item">
-            <a href="<c:url value='/settings' />" class="sidebar-link <c:out value='${param.currentPage == "settings" ? "active" : ""}' />">
-                <i class="fa-solid fa-gear"></i>
-                <span>Settings</span>
-            </a>
-        </div>
+        <c:if test="${sessionScope.role.equalsIgnoreCase('ADMIN')}">
+            <div class="sidebar-item">
+                <a href="<c:url value='/settings' />" class="sidebar-link <c:out value='${param.currentPage == "settings" ? "active" : ""}' />">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+        </c:if>
         <div class="sidebar-item">
             <a href="<c:url value='/auth/logout' />" class="sidebar-link">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>

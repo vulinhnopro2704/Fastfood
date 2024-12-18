@@ -1,5 +1,6 @@
 package org.exam.final_exam.controller;
 
+import com.google.gson.Gson;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -19,7 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 
-@WebServlet(name = "FoodController", urlPatterns = {"/settings", "/settings/user", "/food"})
+@WebServlet(name = "FoodController", urlPatterns = {"/settings", "/settings/user", "/food", "/food/update"})
 public class FoodController extends HttpServlet {
     private final FoodsBO foodsBO;
 
@@ -27,155 +28,188 @@ public class FoodController extends HttpServlet {
         foodsBO = new FoodsBO();
     }
 
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String path = request.getServletPath();
         response.setContentType("text/html");
 
         switch (path) {
             case "/settings":
-
-                List<Foods> listFoods = foodsBO.getAllFoods();
-                request.setAttribute("listFoods", listFoods);
-
-                request.getRequestDispatcher("/jsp/settings/food-manager.jsp").forward(request, response);
+                handleGetAllFoods(request, response);
+                break;
+            case "/food":
+                handleGetFoodById(request, response);
+                break;
             default:
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 break;
         }
     }
 
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String path = request.getServletPath();
         response.setContentType("text/html");
         request.setCharacterEncoding("UTF-8");
-        System.out.println("FoodController - request.getContextPath() : " + request.getContextPath());
-        System.out.println("FoodController - path : " + path);
 
         switch (path) {
             case "/food":
-                System.out.println("SAVE FOOD");
                 handleAddFood(request, response);
+                break;
+            case "/food/update":
+                System.out.println("update food");
+                handleUpdateFood(request, response);
+                break;
+            default:
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 break;
         }
     }
 
-    public void handleAddFood(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Ensure the request is multipart
+    // GET handlers
+    private void handleGetAllFoods(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Foods> listFoods = foodsBO.getAllFoods();
+        request.setAttribute("listFoods", listFoods);
+        request.getRequestDispatcher("/jsp/settings/food-manager.jsp").forward(request, response);
+    }
+
+    private void handleGetFoodById(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String id = request.getParameter("id");
+        if (id == null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Food ID is missing.");
+            return;
+        }
+
+        Foods food = foodsBO.getFoodById(Integer.parseInt(id));
+        if (food == null) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Food not found.");
+            return;
+        }
+
+        Gson gson = new Gson();
+        String json = gson.toJson(food);
+        response.getWriter().write(json);
+    }
+
+    // POST handlers
+    private void handleAddFood(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Foods food = processFoodForm(request);
+        if (food != null) {
+            foodsBO.saveFood(food);
+            response.sendRedirect(request.getContextPath() + "/");
+        } else {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Failed to add food. Check input data.");
+        }
+    }
+
+    private void handleUpdateFood(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Foods food = processFoodForm(request);
+        foodsBO.updateFood(food);
+        System.out.println("update food success");
+        response.sendRedirect(request.getContextPath() + "/settings");
+    }
+
+    // Helper method to process the form (used for both add and update)
+    private Foods processFoodForm(HttpServletRequest request) throws ServletException, IOException {
         if (!JakartaServletFileUpload.isMultipartContent(request)) {
             throw new ServletException("Content type is not multipart/form-data");
         }
 
-        // Use the builder to create a DiskFileItemFactory
         DiskFileItemFactory factory = DiskFileItemFactory.builder().get();
-
-        // Create a new file upload handler
         JakartaServletFileUpload<DiskFileItem, DiskFileItemFactory> upload = new JakartaServletFileUpload<>(factory);
+        String foodId = null;
+        String name = null;
+        String description = null;
+        double price = 0;
+        String imageLink = null;
+        int categoryId = 0;
 
         try {
-            // Parse the request
             List<DiskFileItem> items = upload.parseRequest(request);
-
-            String name = null;
-            String description = null;
-            double price = 0;
-            String imageLink = null;
-            int categoryId = 0;
 
             for (DiskFileItem item : items) {
                 if (item.isFormField()) {
-                    // Process regular form field
                     String fieldName = item.getFieldName();
-                    String fieldValue = item.getString(StandardCharsets.UTF_8); // Specify UTF-8 for proper encoding
+                    String fieldValue = item.getString(StandardCharsets.UTF_8);
+
                     switch (fieldName) {
+                        case "id":
+                            foodId = fieldValue;
+                            break;
                         case "name":
                             name = fieldValue;
-                            System.out.println("name: " + name);
                             break;
                         case "description":
                             description = fieldValue;
-                            System.out.println("description: " + description);
                             break;
                         case "price":
                             price = Double.parseDouble(fieldValue);
-                            System.out.println("price: " + price);
                             break;
                         case "categoryId":
                             categoryId = Integer.parseInt(fieldValue);
-                            System.out.println("categoryId: " + categoryId);
                             break;
                         default:
                             break;
                     }
                 } else {
-                    // Process form file field (input type="file")
-                    if (item.getSize() > 0) { // Check if a file is uploaded
+                    if (item.getSize() > 0) {
                         String fileName = new File(item.getName()).getName();
                         File uploadedFileBuildPath = getFile(fileName, true);
                         File uploadedFile = getFile(fileName, false);
-                        item.write(uploadedFile.toPath()); // Ghi lần đầu, file tạm bị xóa sau lệnh này
-                        Files.copy(uploadedFile.toPath(), uploadedFileBuildPath.toPath(), StandardCopyOption.REPLACE_EXISTING); // Sao chép sang vị trí thứ hai
 
-                        // Sử dụng '/' để đảm bảo tương thích với hệ điều hành
-                        // Thay thế dấu "\" bằng "/"
+                        item.write(uploadedFile.toPath());
+                        Files.copy(uploadedFile.toPath(), uploadedFileBuildPath.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-                        // Cập nhật image link với đường dẫn tương đối
                         imageLink = uploadedFileBuildPath.getAbsolutePath()
                                 .replace(this.getServletConfig().getServletContext().getRealPath("/"), "")
                                 .replace("\\", "/");
-
-                        // Log đường dẫn ảnh
-                        System.out.println("Relative image link: " + imageLink);
                     }
                 }
             }
 
-            // Validate required fields
-            if (name == null || description == null || imageLink == null || price <= 0 || categoryId <= 0) {
+            if (name == null || description == null || price <= 0 || categoryId <= 0) {
                 throw new IllegalArgumentException("Missing or invalid input fields");
             }
-
-            // Create a new food item
-            Foods food = new Foods(name, description, price, imageLink, categoryId);
-
-            // Save the food item using the service
-            foodsBO.saveFood(food);
-
-            // Redirect to a success page
-            response.sendRedirect(request.getContextPath() + "/");
+            if (foodId == null) {
+                imageLink = imageLink == null ? "/assets/default/food.jpeg" : imageLink;
+            }
+            else {
+                Foods oldFood = foodsBO.getFoodById(Integer.parseInt(foodId));
+                imageLink = imageLink == null ? oldFood.getImageLink() : imageLink;
+            }
+            return Foods.builder()
+                    .id(foodId == null ? 0 : Integer.parseInt(foodId))
+                    .name(name)
+                    .description(description)
+                    .price(price)
+                    .imageLink(imageLink)
+                    .categoryId(categoryId)
+                    .build();
         } catch (Exception e) {
             e.printStackTrace();
-            throw new ServletException("Error processing file upload", e);
+            throw new ServletException("Error processing food form", e);
         }
     }
 
+    // Helper method to get file path
     private File getFile(String fileName, Boolean isBuildPath) {
         ServletContext servletContext = this.getServletConfig().getServletContext();
 
-        String baseDir;
-        if (isBuildPath) {
-            // Base directory in webapp/uploads/images
-            baseDir = servletContext.getRealPath("/") + "/assets/uploads/images/";
-        } else {
-            baseDir = servletContext.getRealPath("/").replace("target\\final_exam-1.0-SNAPSHOT", "src/main/webapp") + "/assets/uploads/images/";
-        }
+        String baseDir = isBuildPath
+                ? servletContext.getRealPath("/") + "/assets/uploads/images/"
+                : servletContext.getRealPath("/").replace("target\\final_exam-1.0-SNAPSHOT", "src/main/webapp") + "/assets/uploads/images/";
 
-        // Replace any occurrences of '//' with '/'
         baseDir = baseDir.replace("//", "/");
 
-        // Generate directory structure based on current timestamp (e.g., "id/food")
         String timestampDir = new java.text.SimpleDateFormat("yyyy/MM/dd").format(new java.util.Date());
         String uploadDir = baseDir + timestampDir + "/";
 
-        // Ensure directories exist
         File uploadDirFile = new File(uploadDir);
         if (!uploadDirFile.exists()) {
             uploadDirFile.mkdirs();
         }
 
-        // Generate a unique file name using timestamp
         String uniqueFileName = System.currentTimeMillis() + "_" + fileName;
-
-        // Full file path
-        String filePath = uploadDir + uniqueFileName;
-        return new File(filePath);
+        return new File(uploadDir + uniqueFileName);
     }
 }
