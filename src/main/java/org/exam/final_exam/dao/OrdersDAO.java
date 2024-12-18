@@ -18,31 +18,31 @@ public class OrdersDAO {
                 .userId(rs.getInt("userId"))
                 .orderDate(rs.getDate("orderDate"))
                 .totalAmount(rs.getDouble("totalAmount"))
-                .status(rs.getInt("status"))
+                .status(rs.getString("status"))
                 .createAt(rs.getDate("createdat"))
                 .type(rs.getString("type"))
                 .build());
     }
     public List<Orders> getAllOrdersByUserId(int userId) {
-        String sql = "SELECT * FROM orders where userId = ? and status = 1";
+        String sql = "SELECT * FROM orders where userId = ?";
         return genericDAO.executeQuery(sql, rs -> Orders.builder()
                 .id(rs.getInt("id"))
                 .userId(rs.getInt("userId"))
                 .orderDate(rs.getDate("orderDate"))
                 .totalAmount(rs.getDouble("totalAmount"))
-                .status(rs.getInt("status"))
+                .status(rs.getString("status"))
                 .createAt(rs.getDate("createdat"))
                 .type(rs.getString("type"))
                 .build(),userId);
     }
     public Orders getOrdersByUserId(int userId) {
-        String sql = "SELECT * FROM orders where userId = ? and status = 0 LIMIT 1";
+        String sql = "SELECT * FROM orders where userId = ? LIMIT 1";
         return genericDAO.find(sql, rs -> Orders.builder()
                 .id(rs.getInt("id"))
                 .userId(rs.getInt("userId"))
                 .orderDate(rs.getDate("orderDate"))
                 .totalAmount(rs.getDouble("totalAmount"))
-                .status(rs.getInt("status"))
+                .status(rs.getString("status"))
                 .createAt(rs.getDate("createdat"))
                 .type(rs.getString("type"))
                 .build(),userId);
@@ -55,7 +55,7 @@ public class OrdersDAO {
                 .userId(rs.getInt("userId"))
                 .orderDate(rs.getDate("orderDate"))
                 .totalAmount(rs.getDouble("totalAmount"))
-                .status(rs.getInt("status"))
+                .status(rs.getString("status"))
                 .createAt(rs.getDate("createdat"))
                 .type(rs.getString("type"))
                 .build(), id);

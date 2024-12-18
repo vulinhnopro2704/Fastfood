@@ -16,7 +16,9 @@
 
 <body>
     <div class="settings">
-        <jsp:include page="/jsp/components/side-bar.jsp" />
+        <jsp:include page="/jsp/components/side-bar.jsp">
+            <jsp:param name="currentPage" value="settings"/>
+        </jsp:include>
         <div class="sidebar-food-manager">
             <ul>
                 <li><a href="#" class="active">Quản lý món ăn</a></li>
