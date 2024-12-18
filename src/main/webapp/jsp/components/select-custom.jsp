@@ -7,7 +7,7 @@
     </button>
     <ul class="dropdown-menu">
         <c:forEach var="item" items="${param.items}">
-            <li class="dropdown-item ${item == param.selectedOption ? 'active' : ''}" data-value="${item}">
+            <li class="dropdown-item ${item == param.selectedOption ? 'active' : ''}" data-value="${item}" onclick="handlClick(this)">
                 <span class="dot"></span> ${item}
             </li>
         </c:forEach>

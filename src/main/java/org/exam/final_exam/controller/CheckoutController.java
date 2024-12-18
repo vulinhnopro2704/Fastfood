@@ -20,7 +20,7 @@ import org.exam.final_exam.enums.Status;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "CheckoutController", urlPatterns = {"/checkout","/confirmOrder"})
+@WebServlet(name = "CheckoutController", urlPatterns = {"/checkout","/confirmOrder","/removeFood"})
 public class CheckoutController extends HttpServlet {
     private final OrderDetailsBO orderDetailsBO;
     private final OrdersBO ordersBO;
@@ -63,8 +63,11 @@ public class CheckoutController extends HttpServlet {
                 break;
 
             case "/confirmOrder":
-                // uodate status order = 1, updatedate -> đơn hàng đã được đặt
-                ordersBO.updateOrderStatus(idOrder, Status.PROCESSING.name());
+
+                System.out.println("orderType : " + request.getParameter("orderType"));
+
+                // uodate status order = 1, updatedate , update type-> đơn hàng đã được đặt
+                ordersBO.updateOrderStatus(idOrder,1,request.getParameter("orderType"));
                 // tao moi order cho user
                  ordersBO.addOrder(id,0, Status.PENDING.name(), "TAKEAWAY");
                  // set session orderid cho user
@@ -76,6 +79,7 @@ public class CheckoutController extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException {
         String path = request.getServletPath();
         response.setContentType("text/html");
+        request.setCharacterEncoding("UTF-8");
         System.out.println("path dpo: " + path);
 
         HttpSession session = request.getSession(false); // Không tạo session mới nếu không tồn tại
@@ -92,6 +96,15 @@ public class CheckoutController extends HttpServlet {
             return;
         }
         switch (path){
+            case "/removeFood":
+                System.out.println("removeFood : " + request.getParameter("orderDetailId"));
+                int idorderdetail = Integer.parseInt(request.getParameter("orderDetailId"));
+                int delete = orderDetailsBO.deleteOrderDetails(idorderdetail);
+                if(delete>0){
+                    System.out.println("delete orderdetail");
+                }
+                response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/checkout"));
+                break;
             case "/checkout":
                 System.out.println("checkout");
 //                System.out.println("type : " + request.getParameter("typeOrder"));

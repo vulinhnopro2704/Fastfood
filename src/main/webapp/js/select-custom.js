@@ -34,3 +34,7 @@ document.querySelector(".dropdown-toggle").addEventListener("click", (e) => {
   menu.style.visibility = isVisible ? "hidden" : "visible";
   menu.style.opacity = isVisible ? 0 : 1;
 });
+
+function handlClick(){
+  console.log("type : ");
+}
