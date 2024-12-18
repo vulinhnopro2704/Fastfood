@@ -74,11 +74,19 @@ public class OrderDetailsDAO {
         return genericDAO.executeUpdate(sql, subtotal,idOrderDetail);
     }
 
+
+    public int updateMessage(int idOrderDetail, String message) {
+        String sql = "UPDATE orderdetails SET message = ? WHERE id = ?";
+        return genericDAO.executeUpdate(sql, message, idOrderDetail);
+    }
     public int updateOrderDetail(OrderDetails orderDetail) {
         String sql = "UPDATE orderdetails SET orderId = ?, foodId = ?, quantity = ?, subtotal = ?, message = ? WHERE id = ?";
         return genericDAO.executeUpdate(sql, orderDetail.getOrderId(), orderDetail.getFoodId(), orderDetail.getQuantity(), orderDetail.getSubtotal(),orderDetail.getMessage(),orderDetail.getId());
     }
-
+    public int updateQuantityNumber(int idOderDetail, int quantity){
+        String sql = "UPDATE orderdetails SET  quantity = ? ,subtotal = (subtotal/quantity)*? WHERE id = ?";
+        return genericDAO.executeUpdate(sql, quantity,quantity, idOderDetail);
+    }
     public int deleteOrderDetail(int id) {
         String sql = "DELETE FROM orderdetails WHERE id = ?";
         return genericDAO.executeUpdate(sql, id);

@@ -38,6 +38,12 @@ public class OrderDetailsBO {
 
         return orderDetailsDAO.addOrderDetail(orderDetail);
     }
+    public int updateMessage(int orderId, String message) {
+        return orderDetailsDAO.updateMessage(orderId, message);
+    }
+    public int updateQuantityNumber(int idOderDetail, int quantity) {
+        return orderDetailsDAO.updateQuantityNumber(idOderDetail, quantity);
+    }
     public int updateOrderDetails(OrderDetails orderDetails) {
         return orderDetailsDAO.updateOrderDetail(orderDetails);
     }

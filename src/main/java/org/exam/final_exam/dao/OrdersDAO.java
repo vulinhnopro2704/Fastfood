@@ -73,6 +73,23 @@ public class OrdersDAO {
         return genericDAO.executeUpdate(sql, order.getUserId(), order.getOrderDate(), order.getTotalAmount(), order.getStatus(),order.getType(), order.getId());
     }
 
+    public int updaeOrderStatus(int id, int status) {
+        String sql = "UPDATE orders SET status = ?,orderDate = ? WHERE id = ?";
+        long currentTimeMillis = System.currentTimeMillis();
+        java.sql.Date sqlDate = new java.sql.Date(currentTimeMillis);
+        return genericDAO.executeUpdate(sql, status,sqlDate, id);
+    }
+
+    public int updateOderType(int id, String type) {
+        String sql = "UPDATE orders SET type = ? WHERE id = ?";
+        return genericDAO.executeUpdate(sql, type, id);
+    }
+
+    public int updateTotalAmount(int idOrder, double totalAmount) {
+        String sql = "UPDATE orders SET totalAmount = ? WHERE id = ?";
+        return genericDAO.executeUpdate(sql, totalAmount, idOrder);
+
+    }
     public int deleteOrder(int id) {
         String sql = "DELETE FROM orders WHERE id = ?";
         return genericDAO.executeUpdate(sql, id);

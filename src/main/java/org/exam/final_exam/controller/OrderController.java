@@ -64,6 +64,7 @@ public class OrderController extends HttpServlet {
                     listFoodOrderDetails.addAll(listFoodOrder);
                 }
 
+                orders = orders.reversed();
                 request.setAttribute("orders", orders);
                 request.setAttribute("listFoodOrderDetails", listFoodOrderDetails);
 
