@@ -64,13 +64,14 @@
                             </div>
                             <div class="item-total">
                                 <span><c:out value="${food.subtotal}" /> đ</span>
-                            <form action="<c:url value="/removeFood" />" method="post">
-                                <input type="text" name="orderType" id="orderDetailId"  value="${food.orderDetailId}" hidden="hidden">
+                            <form id="formRemove" action="<c:url value="/removeFood" />" method="post">
+                                <input type="text" name="orderDetailId"  value="${food.orderDetailId}" style="display: none;" hidden>
                                 <button type="submit" class="btn remove">X</button>
                             </form>
                             </div>
                         </div>
                         <div>
+
                             <input type="text" placeholder="Ghi chú" name="message" value="<c:url value="${food.message}" />" disabled>
                         </div>
                     </div>
