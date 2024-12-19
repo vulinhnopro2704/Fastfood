@@ -67,7 +67,7 @@ public class CheckoutController extends HttpServlet {
                 System.out.println("orderType : " + request.getParameter("orderType"));
 
                 // uodate status order = 1, updatedate , update type-> đơn hàng đã được đặt
-                ordersBO.updateOrderStatus(idOrder,1,request.getParameter("orderType"));
+                ordersBO.updateOrderStatus(idOrder,Status.PENDING.name());
                 // tao moi order cho user
                  ordersBO.addOrder(id,0, Status.PENDING.name(), "TAKEAWAY");
                  // set session orderid cho user
