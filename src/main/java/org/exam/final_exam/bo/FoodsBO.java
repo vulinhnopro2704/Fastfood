@@ -23,7 +23,7 @@ public class FoodsBO {
         return foodsDAO.getFoodById(id);
     }
 
-    public int addFood(String name, String description, double price, String imageLink, int categoryId){
+    public int addFood(String name, String description, Long price, String imageLink, int categoryId){
         Foods food = new Foods(name, description, price, imageLink, categoryId);
         return foodsDAO.addFood(food);
     }

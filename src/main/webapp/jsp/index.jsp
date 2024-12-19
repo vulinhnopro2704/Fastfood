@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -78,12 +78,12 @@
                         <!-- Gán giá trị mặc định cho imageUrl -->
                         <c:set var="imageUrl" value="<c:url value='/asset/default/food.jpeg' />" />
                     </c:if>
-
+                    <fmt:formatNumber value="${food.price}" type="currency" currencySymbol="đ"  var="formattedPrice" />
                     <jsp:include page="/jsp/components/card.jsp">
                         <jsp:param name="imageSrc" value="${imageUrl}" />
                         <jsp:param name="altText" value="Healthy Noodles" />
                         <jsp:param name="title" value="${food.name}" />
-                        <jsp:param name="price" value="${food.price}" />
+                        <jsp:param name="price" value="${formattedPrice}" />
                         <jsp:param name="description" value="${food.description}" />
                         <jsp:param name="idFood" value="${food.id}" />
                         <jsp:param name="buttonText" value="Thêm" />

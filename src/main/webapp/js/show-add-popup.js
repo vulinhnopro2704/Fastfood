@@ -176,8 +176,8 @@ function showAddFood(food = {}) {
                     <input type="hidden" name="id" value="${food.id}">
                     <label for="input-file" id="drop-area">
                         <input type="file" id="input-file" name="image" accept="image/*" hidden>
-                        <div id="img-view" style="background-image: url('${food.imageLink || '/final_exam_war_exploded/assets/default/upload.png'}');">
-                            ${!food.imageLink ? '<img src="/final_exam_war_exploded/assets/default/upload.png" alt="Drag and drop here">' : ''}
+                        <div id="img-view">
+                            <img src="/final_exam_war_exploded/assets/default/upload.png" alt="Drag and drop here">
                             <p class="heading">Drag and drop or click here</p>
                             <p class="sub-heading">to upload image</p>
                         </div>
@@ -245,10 +245,16 @@ function showAddFood(food = {}) {
 
     inputFile.addEventListener('change', uploadImage);
 
-    function uploadImage() {
-        let imgLink = URL.createObjectURL(inputFile.files[0]);
-        imgView.style.backgroundImage = `url(${imgLink})`;
-        imgView.textContent = '';
+    function uploadImage(defaultSrc) {
+        if (defaultSrc) {
+            imgView.style.backgroundImage = `url(${defaultSrc})`;
+            imgView.textContent = '';
+        }
+        else {
+            let imgLink = URL.createObjectURL(inputFile.files[0]);
+            imgView.style.backgroundImage = `url(${imgLink})`;
+            imgView.textContent = '';
+        }
     }
 
     closePopupButton.addEventListener('click', () => {
@@ -284,7 +290,8 @@ function showAddFood(food = {}) {
             isValid = false;
             errorMessage += 'Mô tả không được để trống.\n';
         }
-        if (!image && !food.image) {
+
+        if (!image && !food.imageLink) {
             isValid = false;
             errorMessage += 'Vui lòng tải lên hình ảnh.\n';
         }
@@ -295,4 +302,10 @@ function showAddFood(food = {}) {
             form.submit(); // Submit form nếu tất cả đều hợp lệ
         }
     });
+    if (food) {
+        console.log(`food--> ${food}`);
+        if (food.imageLink) {
+            uploadImage(food.imageLink);
+        }
+    }
 }

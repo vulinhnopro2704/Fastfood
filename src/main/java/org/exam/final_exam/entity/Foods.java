@@ -14,12 +14,12 @@ public class Foods {
     private int id;
     private String name;
     private String description;
-    private double price;
+    private Long price;
     private String imageLink;
     private int categoryId;
     private Date createAt;
 
-    public Foods( String name, String description, double price, String imageLink, int categoryId) {
+    public Foods( String name, String description, Long price, String imageLink, int categoryId) {
         this.name = name;
         this.description = description;
         this.price = price;

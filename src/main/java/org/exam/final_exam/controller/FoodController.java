@@ -120,7 +120,7 @@ public class FoodController extends HttpServlet {
         String foodId = null;
         String name = null;
         String description = null;
-        double price = 0;
+        Long price = 0L;
         String imageLink = null;
         int categoryId = 0;
 
@@ -134,7 +134,9 @@ public class FoodController extends HttpServlet {
 
                     switch (fieldName) {
                         case "id":
-                            foodId = fieldValue;
+                            if (fieldValue != null && !fieldValue.trim().isEmpty() && !fieldValue.equals("undefined")) {
+                                foodId = fieldValue;
+                            }
                             break;
                         case "name":
                             name = fieldValue;
@@ -143,7 +145,7 @@ public class FoodController extends HttpServlet {
                             description = fieldValue;
                             break;
                         case "price":
-                            price = Double.parseDouble(fieldValue);
+                            price = Long.parseLong(fieldValue);
                             break;
                         case "categoryId":
                             categoryId = Integer.parseInt(fieldValue);
@@ -170,15 +172,15 @@ public class FoodController extends HttpServlet {
             if (name == null || description == null || price <= 0 || categoryId <= 0) {
                 throw new IllegalArgumentException("Missing or invalid input fields");
             }
-            if (foodId == null) {
-                imageLink = imageLink == null ? "/assets/default/food.jpeg" : imageLink;
+            if (imageLink == null && (foodId == null || foodId.trim().isEmpty())) {
+                imageLink = "/assets/default/food.jpeg";
             }
-            else {
+            else if (imageLink == null && foodId != null && !foodId.trim().isEmpty()) {
                 Foods oldFood = foodsBO.getFoodById(Integer.parseInt(foodId));
-                imageLink = imageLink == null ? oldFood.getImageLink() : imageLink;
+                imageLink = oldFood.getImageLink();
             }
             return Foods.builder()
-                    .id(foodId == null ? 0 : Integer.parseInt(foodId))
+                    .id(foodId == null || foodId.trim().isEmpty() ? 0 : Integer.parseInt(foodId))
                     .name(name)
                     .description(description)
                     .price(price)

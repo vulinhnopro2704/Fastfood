@@ -96,7 +96,7 @@ public class UsersDAO {
         return genericDAO.executeUpdate(sql, user.getFullName(),user.getEmail(),user.getPhoneNumber(),user.getAddress(),user.getRole(),user.getId());
     }
 
-    public int deleteUser(int id) {
+    public int deleteUser(int id) { 
         String sql = "DELETE FROM users WHERE id = ?";
         return genericDAO.executeUpdate(sql, id);
     }
